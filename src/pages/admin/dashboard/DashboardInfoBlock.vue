@@ -1,6 +1,6 @@
 <template>
-  <div class="row row-equal">
-    <div class="flex xl6 xs12 lg6">
+  <div>
+    <!-- <div class="flex xl6 xs12 lg6">
       <div class="row">
         <div v-for="(info, idx) in infoTiles" :key="idx" class="flex xs12 sm4">
           <va-card class="mb-4" :color="info.color">
@@ -75,7 +75,8 @@
     </div>
     <va-modal v-model="modal">
       <va-carousel v-model="currentImageIndex" :items="images" class="gallery-carousel" />
-    </va-modal>
+    </va-modal> -->
+    <MarkupTables />
   </div>
 </template>
 
@@ -83,6 +84,7 @@
   import { ref } from 'vue'
   import { useI18n } from 'vue-i18n'
   import { VaCarousel, VaModal, VaCard, VaCardContent, VaCardTitle, VaButton, VaImage, useColors } from 'vuestic-ui'
+  import MarkupTables from '../tables/markup-tables/MarkupTables.vue'
 
   const { t } = useI18n()
   const { colors } = useColors()
