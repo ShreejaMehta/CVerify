@@ -15,14 +15,14 @@
         size="small"
       />
 
-      <table style="width: 100%">
+      <!-- <table style="width: 100%">
         <color-dropdown-item
           v-for="colorName in colorNames"
           :key="colorName"
           class="color-picker-dropdown"
           :color-name="colorName"
         />
-      </table>
+      </table> -->
     </va-dropdown-content>
   </va-dropdown>
 </template>

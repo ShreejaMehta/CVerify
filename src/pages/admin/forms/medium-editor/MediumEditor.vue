@@ -1,6 +1,6 @@
 <template>
   <div class="medium-editor">
-    <div class="row">
+    <!-- <div class="row">
       <div class="flex md12">
         <va-card>
           <va-card-title>{{ t('forms.mediumEditor.title') }}</va-card-title>
@@ -25,7 +25,7 @@
           </va-card-content>
         </va-card>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -33,7 +33,7 @@
   import { nextTick } from 'vue'
   import { useI18n } from 'vue-i18n'
   import type MediumEditor from 'medium-editor'
-  import VaMediumEditor from '../../../../components/va-medium-editor/VaMediumEditor.vue'
+  // import VaMediumEditor from '../../../../components/va-medium-editor/VaMediumEditor.vue'
 
   const { t } = useI18n()
 

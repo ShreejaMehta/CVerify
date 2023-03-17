@@ -29,7 +29,7 @@
     "email": "osbornefoster@glasstep.com",
     "country": "US Minor Outlying Islands",
     "starred": true,
-    "status": "paid"
+    "status": "Accepted"
   },
   {
     "id": "5d3026a3b2cca1fd45746dbf",
@@ -45,7 +45,7 @@
     "email": "annameyers@glasstep.com",
     "country": "Viet Nam",
     "starred": false,
-    "status": "paid"
+    "status": "Accepted"
   },
   {
     "id": "5d3026a3c614901a53477e5c",
@@ -69,7 +69,7 @@
     "email": "hannahholloway@glasstep.com",
     "country": "Gibraltar",
     "starred": false,
-    "status": "paid"
+    "status": "rejected"
   },
   {
     "id": "5d3026a3e2303324ae9d823f",
