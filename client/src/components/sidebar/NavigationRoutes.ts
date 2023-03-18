@@ -45,15 +45,16 @@ export default {
       disabled: true,
       children: [
         {
+          name: 'medium-editor',
+          displayName: 'User Dashboard',
+        },
+        {
           name: 'file-upload',
           displayName: 'menu.fileUpload',
         },
-        {
-          name: 'medium-editor',
-          displayName: 'menu.mediumEditor',
-        },
       ],
     },
+  
     // {
     //   name: 'tables',
     //   displayName: 'menu.tables',

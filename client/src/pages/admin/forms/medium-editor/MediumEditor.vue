@@ -1,7 +1,34 @@
 <template>
   <div class="medium-editor">
-    <!-- <div class="row">
-      <div class="flex md12">
+    <div class="row row-equal">
+      <div class="row">
+        <div class="flex xs12 sm6 md6">
+          <va-card>
+            <va-card-content>
+              <div class="row row-separated">
+                <div class="flex xs4">
+                  <h2 class="va-h2 ma-0 va-text-center"> 
+                    <va-avatar icon="user" size="70px">
+
+                    </va-avatar>
+          <!-- <i class="fas fa-user-alt" style="font-size: 70px"> </i>  -->
+        </h2>
+                  <p class="va-text-center"></p>
+                </div>
+                <div class="flex xs4">
+                  <va-card-title>Basic Details</va-card-title>
+                  <va-card-content> Name:{{  }} </va-card-content>
+                  <va-card-content>Gender:{{  }}</va-card-content>
+                  <va-card-content>Age:{{  }}</va-card-content>
+                  <p class="va-text-center no-wrap"></p>
+                </div>
+              </div>
+            </va-card-content>
+          </va-card>
+        </div>
+    </div>
+      </div>
+      <!-- <div class="flex md12">
         <va-card>
           <va-card-title>{{ t('forms.mediumEditor.title') }}</va-card-title>
           <va-card-content class="d-flex justify-center">
@@ -24,8 +51,17 @@
             </va-medium-editor>
           </va-card-content>
         </va-card>
+      </div> -->
+      <!-- <div class=" flex xs8 md3">
+        <va-avatar size="150px" font-size="30px">
+          <i class="fas fa-user-alt" style="font-size: 80px"></i>
+        </va-avatar> 
       </div>
-    </div> -->
+      <va-card class="flex ">
+        <va-card-title>Basic Details</va-card-title>
+        <va-card-content>Name:{{  }}</va-card-content>
+      </va-card> -->
+     
   </div>
 </template>
 

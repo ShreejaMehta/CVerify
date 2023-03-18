@@ -107,4 +107,8 @@ export default [
     name: 'key',
     to: 'ion-md-key',
   },
+  {
+    name: 'user',
+    to: 'fa-user-alt'
+  }
 ]
