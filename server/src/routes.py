@@ -1,4 +1,4 @@
-from sanic import Blueprint, Sanic, Request, redirect, text, json
+from sanic import Blueprint, Request, redirect, json
 from sanic_ext import openapi
 from .parser import parser
 from .auth import check_login
@@ -6,6 +6,7 @@ from .auth import check_login
 router = Blueprint("router")
 
 
+# Nothing here
 @router.get("/")
 @openapi.exclude()
 async def goto_home(_):
@@ -13,9 +14,10 @@ async def goto_home(_):
     return redirect("https://google.com", status=302)
 
 
+# Login
 @router.post("/auth")
 @openapi.exclude()
-@openapi.response(200, {"application/json": {"databaseId": int}}, "Auth Provider")
+@openapi.response(200, {"application/json": {"status": str, "sessionId": str, "loggedIn": bool}}, "Auth Provider")
 async def auth(req: Request):
     user = req.args.get("user")
     password = req.args.get("password")
@@ -26,14 +28,14 @@ async def auth(req: Request):
     if logged_in:
         return json({"status": "Logged In", "sessionId": id, "loggedIn": True})
     
-    return json({"status": "Failed login", "sessionId": -1, "loggedIn": False})
+    return json({"status": "Failed login", "sessionId": "-1", "loggedIn": False})
 
 
 # Parser
-@router.post("/api/parse")
+@router.post("/parse")
 @openapi.parameter("path", str, required=True, allowEmptyValue=False)
-@openapi.body({"application/json": {"path": str}})
-@openapi.response(200, {"application/json": {"databaseId": int}}, "Returns id of data stored in database probably")
+# @openapi.body({"application/json": {"path": str}})
+@openapi.response(200, {"application/json": {"candidateId": int}}, "Returns id of data stored in database probably")
 @openapi.response(400, {"application/json": {"message": str}}, "Returns error message")
 @openapi.summary("Parses resume")
 @openapi.secured('foo')
@@ -56,4 +58,11 @@ async def parse(req: Request):
         return json({"message": err}, status=400)
 
     # Successfully parsed
-    return json({"databaseId": id}, status=200)
+    return json({"candidateId": id}, status=200)
+
+
+# Get Candidate info
+@router.post("/details")
+@openapi.parameter("candidateId", str, required=True, allowEmptyValue=False)
+async def get_details(req: Request):
+    return json({"id": req.args.get("candidateId")}, status=200)
