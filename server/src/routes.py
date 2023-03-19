@@ -1,6 +1,6 @@
 from sanic import Blueprint, Request, redirect, json
 from sanic_ext import openapi
-from .parser import parser
+from .pdfanal.parser import parser
 from .auth import check_login
 
 router = Blueprint("router")
