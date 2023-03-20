@@ -1,11 +1,13 @@
 from typing import Tuple, Union
+
+from src.models import CandidateInfo
 from .extractors import *
 
 
-async def analyze(pdf_text: str) -> Tuple[str, Union[str, None]]:
+async def analyze(pdf_text: str) -> Tuple[CandidateInfo, Union[str, None]]:
     """
     Analyses the given text, and extracts required data from the text
-    inserts into the database and returns candidate id
+    returns `CandidateInfo` and an error message
     """
 
     name = await extract_name(pdf_text)
@@ -16,4 +18,12 @@ async def analyze(pdf_text: str) -> Tuple[str, Union[str, None]]:
     github = await extract_github(pdf_text)
     linkedin = await extract_linkedin(pdf_text)
 
-    return "", None
+    return CandidateInfo(
+        name=name,
+        number=number,
+        email=email,
+        skills=skills,
+        education=education,
+        github=github,
+        linkedin=linkedin
+    ), None

@@ -7,6 +7,8 @@ name = "pypi"
 pymupdf = "*"
 fastapi = "*"
 uvicorn = {extras = ["standard"], version = "*"}
+spacy = "*"
+pandas = "*"
 
 [dev-packages]
 

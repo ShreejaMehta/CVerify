@@ -33,7 +33,7 @@ async def insert_credentials(username: str, password: str):
     return id
 
 
-async def insert_candidate(info: CandidateInfo):
+async def insert_candidate(info: CandidateInfo) -> int:
     query = candidate_info.insert().values(
         name=info.name,
         number=info.number,
