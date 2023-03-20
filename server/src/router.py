@@ -1,7 +1,9 @@
+from typing import Union
 from fastapi import APIRouter, HTTPException
 from fastapi.responses import RedirectResponse
+from src.db import get_candidate, insert_candidate
 from src.pdfanal.parser import parser
-from .models import UserAuth, AuthResponse, ParseRequest, ParseResponse, CandidateInfo
+from .models import ErrorResponse, UserAuth, AuthResponse, ParseRequest, ParseResponse, CandidateInfo
 from .auth import check_login
 
 router = APIRouter()
@@ -52,5 +54,28 @@ async def parse(req: ParseRequest) -> ParseResponse:
 
 # Get Candidate info
 @router.post("/candidate/{candidate_id}")
-async def get_details(candidate_id: str) -> CandidateInfo:
-    return CandidateInfo(name="Asdf")
+async def get_details(candidate_id: int) -> Union[CandidateInfo, ErrorResponse]:
+    # info = CandidateInfo(
+    #     name="Asad",
+    #     number="100",
+    #     email="asad@azad.com",
+    #     skills=[],
+    #     education=[],
+    #     github="asad",
+    #     linkedin="https://google.com",
+    # )
+    # id = await insert_candidate(info)
+    cand = await get_candidate(candidate_id)
+
+    if not cand:
+        return ErrorResponse(message="Candidate id not found")
+
+    return cand
+
+
+@router.post("/summary/{limit}")
+async def candidate_range(limit: int) -> list[CandidateInfo]:
+    """
+    Returns first `limit` candidates from the DB
+    """
+    return []

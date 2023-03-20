@@ -1,7 +1,17 @@
 from pydantic import BaseModel
 
 
+class ErrorResponse(BaseModel):
+    """
+    Error message
+    """
+    message: str
+
+
 class UserAuth(BaseModel):
+    """
+    stored as `credentials` in db_model
+    """
     username: str
     password: str
 
@@ -26,4 +36,18 @@ class ParseResponse(BaseModel):
 
 
 class CandidateInfo(BaseModel):
+    """
+    stored as `candidate_info` in db_model
+    """
+    id: int = -1
     name: str
+    number: str
+    email: str
+    skills: list[str]
+    education: list[str]
+    github: str
+    linkedin: str
+
+    status: str = "processing"
+    # compatibility_rate
+    # photo?

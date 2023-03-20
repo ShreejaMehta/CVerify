@@ -5,6 +5,7 @@ from .extractors import *
 async def analyze(pdf_text: str) -> Tuple[str, Union[str, None]]:
     """
     Analyses the given text, and extracts required data from the text
+    inserts into the database and returns candidate id
     """
 
     name = await extract_name(pdf_text)
