@@ -2,33 +2,50 @@
   <div class="medium-editor">
     <div class="row row-equal">
       <div class="row">
-        <div class="flex xs12 sm6 md6">
+        <div class="flex xs3 md2">
           <va-card>
             <va-card-content>
               <div class="row row-separated">
-                <div class="flex xs4">
-                  <h2 class="va-h2 ma-0 va-text-center"> 
-                    <va-avatar icon="user" size="70px">
-
+                <div class="flex xs12">
+                  <h2 class="va-h2 ma-0 va-text-center">
+                    <va-avatar size="150px">
+                      <i class="fas fa-user-alt" style="font-size: 100px"> </i>
                     </va-avatar>
-          <!-- <i class="fas fa-user-alt" style="font-size: 70px"> </i>  -->
-        </h2>
+                  </h2>
                   <p class="va-text-center"></p>
                 </div>
-                <div class="flex xs4">
+                <div class="flex xs6">
                   <va-card-title>Basic Details</va-card-title>
-                  <va-card-content> Name:{{  }} </va-card-content>
-                  <va-card-content>Gender:{{  }}</va-card-content>
-                  <va-card-content>Age:{{  }}</va-card-content>
+                  <va-card-content> Name:{{}} </va-card-content>
+                  <va-card-content>Gender:{{}}</va-card-content>
+                  <va-card-content>Age:{{}}</va-card-content>
                   <p class="va-text-center no-wrap"></p>
                 </div>
               </div>
             </va-card-content>
           </va-card>
         </div>
-    </div>
+        <div class="flex  ">
+          <colorful-bars />
+          <va-card class="xs12 sm6 md6">
+            <va-card-title>Github Data</va-card-title>
+            <!-- Fetch data from Github API-->
+            <va-card-content>
+              <h2 class="va-h2 ma-0" :style="{ color: colors.primary }">291</h2>
+              <p class="no-wrap">{{ t('dashboard.info.completedPullRequests') }}</p>
+            </va-card-content>
+          </va-card>
+        </div>
       </div>
-      <!-- <div class="flex md12">
+    </div>
+    <div class="flex xs12 sm6 md6">
+          <va-card class="row">
+            <va-card-content>
+              LinkedIN
+            </va-card-content>
+          </va-card>
+        </div>
+    <!-- <div class="flex md12">
         <va-card>
           <va-card-title>{{ t('forms.mediumEditor.title') }}</va-card-title>
           <va-card-content class="d-flex justify-center">
@@ -52,7 +69,7 @@
           </va-card-content>
         </va-card>
       </div> -->
-      <!-- <div class=" flex xs8 md3">
+    <!-- <div class=" flex xs8 md3">
         <va-avatar size="150px" font-size="30px">
           <i class="fas fa-user-alt" style="font-size: 80px"></i>
         </va-avatar> 
@@ -61,7 +78,6 @@
         <va-card-title>Basic Details</va-card-title>
         <va-card-content>Name:{{  }}</va-card-content>
       </va-card> -->
-     
   </div>
 </template>
 
@@ -69,10 +85,12 @@
   import { nextTick } from 'vue'
   import { useI18n } from 'vue-i18n'
   import type MediumEditor from 'medium-editor'
+  import ColorfulBars from './Widgets/ColorfulBars.vue'
+  import { useColors } from 'vuestic-ui/web-components'
   // import VaMediumEditor from '../../../../components/va-medium-editor/VaMediumEditor.vue'
 
   const { t } = useI18n()
-
+  const {colors} = useColors()
   function handleEditorInitialization(editor: typeof MediumEditor) {
     nextTick(() => highlightSampleText(editor))
   }
