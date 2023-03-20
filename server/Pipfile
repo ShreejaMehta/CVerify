@@ -4,11 +4,11 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-sanic = "*"
-sanic-openapi = "*"
-sanic-ext = "*"
+pymupdf = "*"
+fastapi = "*"
+uvicorn = {extras = ["standard"], version = "*"}
 
 [dev-packages]
 
 [requires]
-python_version = "3.6"
+python_version = "3.10"
