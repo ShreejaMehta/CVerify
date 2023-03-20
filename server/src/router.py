@@ -1,7 +1,7 @@
 from typing import Union
 from fastapi import APIRouter, HTTPException
 from fastapi.responses import RedirectResponse
-from src.db import get_candidate, insert_candidate
+from src.db import check_credentials, get_candidate, get_candidate_range, insert_candidate, insert_credentials
 from src.pdfanal.parser import parser
 from .models import ErrorResponse, UserAuth, AuthResponse, ParseRequest, ParseResponse, CandidateInfo
 from .auth import check_login
@@ -17,16 +17,21 @@ async def index_redirect():
 
 
 # Login
-@router.post("/auth", include_in_schema=False)
-async def auth(info: UserAuth) -> AuthResponse:
+@router.post("/auth/login", include_in_schema=True)
+async def login(info: UserAuth) -> AuthResponse:
     user = info.username
     password = info.password
     # Check login and give user a token, add that token to the db
-    logged_in, id = await check_login(user, password)
+    logged_in, id = await check_credentials(user, password)
 
-    if logged_in:
-        return AuthResponse(logged_in=True, message="Vaild credentials", sessionId=id)
-    return AuthResponse(logged_in=False, message="Invalid credentials", sessionId="-1")
+    return AuthResponse(logged_in=logged_in, message="", sessionId=id)
+
+
+# Register
+# TODO: Security
+@router.post("/auth/register", include_in_schema=True)
+async def register(username: str, password: str) -> bool:
+    return (await insert_credentials(username, password)) != -1
 
 
 # Parser
@@ -74,8 +79,9 @@ async def get_details(candidate_id: int) -> Union[CandidateInfo, ErrorResponse]:
 
 
 @router.post("/summary/{limit}")
-async def candidate_range(limit: int) -> list[CandidateInfo]:
+async def candidate_range(limit: int = 10) -> list[CandidateInfo]:
     """
     Returns first `limit` candidates from the DB
     """
-    return []
+    candidates = await get_candidate_range(limit)
+    return candidates

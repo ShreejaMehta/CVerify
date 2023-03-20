@@ -1,7 +1,7 @@
-from typing import Union
+from typing import Tuple, Union
 from databases import Database
 from src.models import CandidateInfo
-from .db_models import sessions, credentials, candidate_info, get_db
+from .db_models import convert_into_candidate_model, sessions, credentials, candidate_info, get_db
 
 # 3 tables
 #   + candidate: stores candiate information
@@ -9,8 +9,28 @@ from .db_models import sessions, credentials, candidate_info, get_db
 #   + sessions: stores current user sessions
 
 
-async def check_credentials(username: str, password: str):
-    pass
+async def check_credentials(username: str, password: str) -> Tuple[bool, str]:
+    query = credentials.select().where(credentials.c.username == username)
+    resp = await get_db().fetch_one(query)
+
+    # TODO: Implement user sessions
+    if not resp:
+        return False, "-1"
+
+    pissword = resp[1]
+    if password == pissword:
+        return True, "1"
+
+    return False, "-1"
+
+
+async def insert_credentials(username: str, password: str):
+    query = credentials.insert().values(
+        username=username,
+        password=password
+    ) 
+    id = await get_db().execute(query)
+    return id
 
 
 async def insert_candidate(info: CandidateInfo):
@@ -33,18 +53,14 @@ async def get_candidate(id: int) -> Union[None, CandidateInfo]:
     resp = await get_db().fetch_one(query)
     if not resp:
         return None
-    return CandidateInfo(
-        id=resp[0],
-        name=resp[1],
-        number=resp[2],
-        email=resp[3],
-        skills=resp[4].split(","),
-        education=resp[5].split(","),
-        github=resp[6],
-        linkedin=resp[7],
-        status=resp[8]
-    )
+    return convert_into_candidate_model(resp)
 
 
 async def get_candidate_range(limit: int) -> list[CandidateInfo]:
-    return []
+    query = candidate_info.select().limit(limit)
+    resp = await get_db().fetch_all(query)
+
+    return [
+        convert_into_candidate_model(info)
+        for info in resp
+    ]

@@ -1,6 +1,8 @@
 from databases import Database
 from sqlalchemy import MetaData, Table, Column, Integer, String, ForeignKey
 
+from src.models import CandidateInfo
+
 # Database instance: BAD CODING
 database: Database
 def get_db():
@@ -50,3 +52,21 @@ def init_database(engine, db):
 
     global database
     database = db
+
+
+def convert_into_candidate_model(db_resp) -> CandidateInfo:
+    """
+    Converts database response from `candidate_info` table
+    into `CandidateInfo` pydantic model
+    """
+    return CandidateInfo(
+        id=db_resp[0],
+        name=db_resp[1],
+        number=db_resp[2],
+        email=db_resp[3],
+        skills=db_resp[4].split(","),
+        education=db_resp[5].split(","),
+        github=db_resp[6],
+        linkedin=db_resp[7],
+        status=db_resp[8]
+    )
