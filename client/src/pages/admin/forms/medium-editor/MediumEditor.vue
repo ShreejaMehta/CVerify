@@ -25,7 +25,7 @@
             </va-card-content>
           </va-card>
         </div>
-        <div class="flex  ">
+        <div class="flex">
           <colorful-bars />
           <va-card class="xs12 sm6 md6">
             <va-card-title>Github Data</va-card-title>
@@ -38,13 +38,11 @@
         </div>
       </div>
     </div>
-    <div class="flex xs12 sm6 md6">
-          <va-card class="row">
-            <va-card-content>
-              LinkedIN
-            </va-card-content>
-          </va-card>
-        </div>
+    <div class="row row-seperated">
+      <va-card class="xs12 sm6 md6">
+        <va-card-content> LinkedIN </va-card-content>
+      </va-card>
+    </div>
     <!-- <div class="flex md12">
         <va-card>
           <va-card-title>{{ t('forms.mediumEditor.title') }}</va-card-title>
@@ -90,7 +88,7 @@
   // import VaMediumEditor from '../../../../components/va-medium-editor/VaMediumEditor.vue'
 
   const { t } = useI18n()
-  const {colors} = useColors()
+  const { colors } = useColors()
   function handleEditorInitialization(editor: typeof MediumEditor) {
     nextTick(() => highlightSampleText(editor))
   }
