@@ -1,5 +1,6 @@
 from fastapi import FastAPI, status, Request
 from fastapi.encoders import jsonable_encoder
+import uvicorn
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
 import sqlalchemy
@@ -31,6 +32,9 @@ async def startup():
 async def shutdown():
     await database.disconnect()
 
+
+if __name__ == "__main__":
+    uvicorn.run(app, host="localhost", port=6969, log_level="info")
 
 # @app.exception_handler(RequestValidationError)
 # async def validation_exception_handler(request: Request, exc: RequestValidationError):
