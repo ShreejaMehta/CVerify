@@ -40,7 +40,8 @@ candidate_info = Table(
     Column("education", String),
     Column("github", String),
     Column("linkedin", String),
-    Column("status", String)
+    Column("status", String),
+    Column("urls", String)
 )
 
 
@@ -68,5 +69,6 @@ def convert_into_candidate_model(db_resp) -> CandidateInfo:
         education=db_resp[5].split(","),
         github=db_resp[6],
         linkedin=db_resp[7],
-        status=db_resp[8]
+        status=db_resp[8],
+        urls=db_resp[9].split(",")
     )

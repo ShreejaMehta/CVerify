@@ -42,7 +42,8 @@ async def insert_candidate(info: CandidateInfo) -> int:
         education=",".join(info.education),
         github=info.github,
         linkedin=info.linkedin,
-        status=info.status
+        status=info.status,
+        urls=",".join(info.urls)
     )
     insert_record_id = await get_db().execute(query)
     return insert_record_id

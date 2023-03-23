@@ -1,2 +1,10 @@
 make auth private
 implement education
+
+Edit candidate info:
+- extractors.py
+- anal.py
+- db.py
+- db_models.py
+- models.py
++ This is bad, make a single interface

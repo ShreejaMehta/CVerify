@@ -17,6 +17,7 @@ async def analyze(pdf_text: str) -> Tuple[CandidateInfo, Union[str, None]]:
     education = await extract_education(pdf_text)
     github = await extract_github(pdf_text)
     linkedin = await extract_linkedin(pdf_text)
+    urls = await extract_urls(pdf_text)
 
     return CandidateInfo(
         name=name,
@@ -25,5 +26,6 @@ async def analyze(pdf_text: str) -> Tuple[CandidateInfo, Union[str, None]]:
         skills=skills,
         education=education,
         github=github,
-        linkedin=linkedin
+        linkedin=linkedin,
+        urls=urls
     ), None
