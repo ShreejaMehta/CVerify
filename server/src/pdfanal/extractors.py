@@ -85,7 +85,7 @@ async def extract_mobile_number(text: str) -> str:
 
 
 async def extract_github(text: str) -> str:
-    pat = re.compile("https://github.com/([^\s^/]+)")
+    pat = re.compile("github.com/([^\s^/]+)")
     matches = pat.findall(text)
 
     if len(matches) == 0:
