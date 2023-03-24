@@ -47,6 +47,7 @@ class CandidateInfo(BaseModel):
     education: list[str]
     github: str
     linkedin: str
+    urls: list[str]
 
     status: str = "processing"
     # compatibility_rate

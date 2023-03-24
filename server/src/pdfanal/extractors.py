@@ -6,6 +6,7 @@ import re
 import spacy
 from spacy.matcher import Matcher
 import pandas as pd
+import validators
 
 
 # NLP based
@@ -64,10 +65,10 @@ async def extract_education(text: str) -> list[str]:
 
 # ReGeX based
 async def extract_email(text: str) -> str:
-    email = re.findall("([^@|\s]+@[^@]+\.[^@|\s]+)", text)
+    email = re.findall(r"([^@|\s]+@[^@]+\.[^@|\s]+)", text)
     if email:
         try:
-            return email[0].split()[0].strip(';')
+            return email[0].split()[0].strip(';') # IDK what this does
         except IndexError:
             pass
     return ""
@@ -85,7 +86,7 @@ async def extract_mobile_number(text: str) -> str:
 
 
 async def extract_github(text: str) -> str:
-    pat = re.compile("https://github.com/([^\s^/]+)")
+    pat = re.compile(r"github.com/([^\s^/]+)")
     matches = pat.findall(text)
 
     if len(matches) == 0:
@@ -94,9 +95,16 @@ async def extract_github(text: str) -> str:
 
 
 async def extract_linkedin(text: str) -> str:
-    pat = re.compile("((?:(?:[\w]+\.)?linkedin\.com\/(?:pub|in|profile)\/(?:[-a-zA-Z0-9]+)\/*))")
+    pat = re.compile(r"((?:(?:[\w]+\.)?linkedin\.com\/(?:pub|in|profile)\/(?:[-a-zA-Z0-9]+)\/*))")
     matches = pat.findall(text)
 
     if len(matches) == 0:
         return ""
     return matches[0]  # Return the first occurance
+
+
+async def extract_urls(text: str) -> list[str]:
+    text = "".join(letter for letter in text if letter.isascii())
+    pat = re.compile(r"(https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&\/=]*))")
+    matches = pat.findall(text)
+    return matches

@@ -13,7 +13,8 @@ router = APIRouter()
 @router.get("/")
 async def index_redirect():
     # TODO: Redirect to index page
-    return RedirectResponse("https://google.com")
+    # return RedirectResponse("https://google.com")
+    return {"status": "alive"}
 
 
 # Login
