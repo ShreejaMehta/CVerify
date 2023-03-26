@@ -1,11 +1,21 @@
+from dataclasses import dataclass
 from pydantic import BaseModel
+
+
+class ServerResponse(BaseModel):
+    """
+    A response from the server
+    """
+    message: str
+    code: int
 
 
 class ErrorResponse(BaseModel):
     """
-    Error message
+    Error message model
     """
     message: str
+    code: int
 
 
 class UserAuth(BaseModel):

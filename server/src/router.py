@@ -3,8 +3,8 @@ from fastapi import APIRouter, HTTPException
 from fastapi.responses import RedirectResponse
 from src.db import check_credentials, get_candidate, get_candidate_range, insert_candidate, insert_credentials
 from src.pdfanal.parser import parser
-from .models import ErrorResponse, UserAuth, AuthResponse, ParseRequest, ParseResponse, CandidateInfo
-from .auth import check_login
+from .models import ErrorResponse, ServerResponse, UserAuth, AuthResponse, ParseRequest, ParseResponse, CandidateInfo
+from .auth import check_login, create_user
 
 router = APIRouter()
 
@@ -31,8 +31,8 @@ async def login(info: UserAuth) -> AuthResponse:
 # Register
 # TODO: Security
 @router.post("/auth/register", include_in_schema=True)
-async def register(username: str, password: str) -> bool:
-    return (await insert_credentials(username, password)) != -1
+async def register(info: UserAuth, api_key: str) -> Union[ServerResponse, ErrorResponse]:
+    return (await create_user(info, api_key))
 
 
 # Parser
