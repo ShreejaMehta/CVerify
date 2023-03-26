@@ -6,7 +6,6 @@ import re
 import spacy
 from spacy.matcher import Matcher
 import pandas as pd
-import validators
 
 
 # NLP based
