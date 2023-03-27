@@ -41,7 +41,7 @@ class ParseResponse(BaseModel):
     if candidate_id is "-1", then parsing failed
     check `message` for more details
     """
-    candidate_id: str
+    candidate_id: int
     message: str
 
 

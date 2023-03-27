@@ -59,7 +59,7 @@ async def parse(req: ParseRequest) -> ParseResponse:
 
 
 # Get Candidate info
-@router.post("/candidate/{candidate_id}")
+@router.get("/candidate/{candidate_id}")
 async def get_details(candidate_id: int) -> Union[CandidateInfo, ErrorResponse]:
     # info = CandidateInfo(
     #     name="Asad",
@@ -74,12 +74,12 @@ async def get_details(candidate_id: int) -> Union[CandidateInfo, ErrorResponse]:
     cand = await get_candidate(candidate_id)
 
     if not cand:
-        return ErrorResponse(message="Candidate id not found")
+        return ErrorResponse(message="Candidate id not found", code=1)
 
     return cand
 
 
-@router.post("/summary/{limit}")
+@router.get("/summary/{limit}")
 async def candidate_range(limit: int = 10) -> list[CandidateInfo]:
     """
     Returns first `limit` candidates from the DB
