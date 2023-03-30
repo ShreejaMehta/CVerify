@@ -50,11 +50,10 @@ export default {
         },
         {
           name: 'file-upload',
-          displayName: 'menu.fileUpload',
+          displayName: 'File Upload',
         },
       ],
     },
-
     // {
     //   name: 'tables',
     //   displayName: 'menu.tables',

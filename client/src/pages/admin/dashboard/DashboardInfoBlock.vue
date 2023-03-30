@@ -1,5 +1,6 @@
 <template>
   <div>
+    <!-- <h1>{{ post }}</h1> -->
     <!-- <div class="flex xl6 xs12 lg6">
       <div class="row">
         <div v-for="(info, idx) in infoTiles" :key="idx" class="flex xs12 sm4">
@@ -76,18 +77,56 @@
     <va-modal v-model="modal">
       <va-carousel v-model="currentImageIndex" :items="images" class="gallery-carousel" />
     </va-modal> -->
-    <MarkupTables />
+    <!-- <MarkupTables /> -->
+
+    <div>
+      <h2>List of Candidates</h2>
+      <ul>
+        <li v-for="candidate in candidates" :key="candidate.id">
+          <h3>{{ candidate.name }}</h3>
+          <p>Number: {{ candidate.number }}</p>
+          <p>Email: {{ candidate.email }}</p>
+          <p>Skills: {{ candidate.skills.join(', ') }}</p>
+          <p>Education: {{ candidate.education.join(', ') }}</p>
+          <p>Github: {{ candidate.github }}</p>
+          <p>LinkedIn: {{ candidate.linkedIn }}</p>
+          <p>Urls: {{ candidate.urls.join(', ') }}</p>
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
-  import { ref } from 'vue'
+  import { ref, onMounted } from 'vue'
   import { useI18n } from 'vue-i18n'
   import { VaCarousel, VaModal, VaCard, VaCardContent, VaCardTitle, VaButton, VaImage, useColors } from 'vuestic-ui'
   import MarkupTables from '../tables/markup-tables/MarkupTables.vue'
-
   const { t } = useI18n()
   const { colors } = useColors()
+
+  interface Candidate {
+    id: number,
+    name: string,
+    number: string
+    email: string
+    skills: string[]
+    education: string[]
+    github: string
+    linkedIn: string
+    urls: string[]
+  }
+  const candidates = ref<Candidate[]>([])
+
+  onMounted(async () => {
+    try {
+      const response = await fetch('http://localhost/6969/summary/100')
+      const data = await response.json()
+      candidates.value = data as Candidate[]
+    } catch (error) {
+      console.error(error)
+    }
+  })
 
   const infoTiles = ref([
     {
@@ -111,18 +150,18 @@
   ])
 
   const modal = ref(false)
-  const currentImageIndex = ref(0)
-  const images = ref([
-    'https://i.imgur.com/qSykGko.jpg',
-    'https://i.imgur.com/jYwT08D.png',
-    'https://i.imgur.com/9930myH.jpg',
-    'https://i.imgur.com/2JxhWD6.jpg',
-    'https://i.imgur.com/MpiOWbM.jpg',
-  ])
+  // const currentImageIndex = ref(0)
+  // const images = ref([
+  //   'https://i.imgur.com/qSykGko.jpg',
+  //   'https://i.imgur.com/jYwT08D.png',
+  //   'https://i.imgur.com/9930myH.jpg',
+  //   'https://i.imgur.com/2JxhWD6.jpg',
+  //   'https://i.imgur.com/MpiOWbM.jpg',
+  // ])
 
-  function showModal() {
-    modal.value = true
-  }
+  // function showModal() {
+  //   modal.value = true
+  // }
 </script>
 
 <style lang="scss" scoped>

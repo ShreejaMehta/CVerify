@@ -109,6 +109,6 @@ export default [
   },
   {
     name: 'user',
-    to: 'fa-user-alt'
-  }
+    to: 'fa-user-alt',
+  },
 ]

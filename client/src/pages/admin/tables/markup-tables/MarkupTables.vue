@@ -42,7 +42,6 @@
                 <th>Status</th>
               </tr>
             </thead>
-
             <tbody>
               <tr v-for="user in users" :key="user.id">
                 <td>{{ user.name }}</td>
@@ -82,10 +81,13 @@
   import { useI18n } from 'vue-i18n'
   import data from '../../../../data/tables/markup-table/data.json'
   import { VaCard, VaCardContent, VaCardTitle } from 'vuestic-ui'
+  import axios, { AxiosResponse } from 'axios'
+  import Vue,{onMounted} from 'vue'
+  import console from 'console'
+  import VueAxios from 'vue-axios'
+
   const { t } = useI18n()
-
   const users = ref(data.slice(0, 10))
-
   var countStatus = (status: string) =>
     Object.values(data.slice(0, 10)).reduce(function (n, i) {
       return n + +(i.status === status)
