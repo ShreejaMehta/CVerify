@@ -2,7 +2,7 @@
   <div class="medium-editor">
     <div class="row row-equal">
       <div class="row">
-        <div class="flex xs3 md2">
+        <div class="flex xs12 xl3 md12">
           <va-card>
             <va-card-content>
               <div class="row row-separated">
@@ -14,7 +14,7 @@
                   </h2>
                   <p class="va-text-center"></p>
                 </div>
-                <div class="flex xs6">
+                <div class="flex xs6 xl3">
                   <va-card-title>Basic Details</va-card-title>
                   <va-card-content> Name:{{}} </va-card-content>
                   <va-card-content>Gender:{{}}</va-card-content>
@@ -25,33 +25,31 @@
             </va-card-content>
           </va-card>
         </div>
-        <div class="flex  ">
+        <div class="flex">
           <colorful-bars />
-          <va-card class="xs12 sm6 md6">
+          <br />
+          <va-card class="xs12 sm6 md12">
             <va-card-title>Github Data</va-card-title>
             <!-- Fetch data from Github API-->
             <va-card-content>
               <h2 class="va-h2 ma-0" :style="{ color: colors.primary }">291</h2>
-              <p class="no-wrap">{{ t('dashboard.info.completedPullRequests') }}</p>
+              <p class="no-wrap">Completed Pull Requests</p>
             </va-card-content>
           </va-card>
         </div>
       </div>
+      <div class="flex xs12 sm6 md12 xl12">
+        <va-card class="row row-seperated">
+          <va-card-content> LinkedIN </va-card-content>
+        </va-card>
+      </div>
     </div>
-    <div class="flex xs12 sm6 md6">
-          <va-card class="row">
-            <va-card-content>
-              LinkedIN
-            </va-card-content>
-          </va-card>
-        </div>
     <!-- <div class="flex md12">
         <va-card>
           <va-card-title>{{ t('forms.mediumEditor.title') }}</va-card-title>
           <va-card-content class="d-flex justify-center">
             <va-medium-editor @initialized="handleEditorInitialization">
               <h1>Select Text To Open Editor</h1>
-
               <p>
                 You enter into your favorite local bar looking
                 <span class="default-selection"><b>good</b></span> as hell, but you know the only heads you want to
@@ -60,7 +58,6 @@
                 selfies, listener of stories. Meanwhile, you attract unwanted attention from straight men, pudgy and
                 greasy moths to your emotionally distant flame.
               </p>
-
               <p>
                 Read the full article on
                 <a href="https://medium.com/@dorn.anna/girl-no-you-dont-2e21e826c62c">Medium</a>
@@ -86,15 +83,13 @@
   import { useI18n } from 'vue-i18n'
   import type MediumEditor from 'medium-editor'
   import ColorfulBars from './Widgets/ColorfulBars.vue'
-  import { useColors } from 'vuestic-ui/web-components'
+  import { useColors } from 'vuestic-ui'
   // import VaMediumEditor from '../../../../components/va-medium-editor/VaMediumEditor.vue'
-
-  const { t } = useI18n()
-  const {colors} = useColors()
+  // const { t } = useI18n()
+  const { colors } = useColors()
   function handleEditorInitialization(editor: typeof MediumEditor) {
     nextTick(() => highlightSampleText(editor))
   }
-
   function highlightSampleText(editor: typeof MediumEditor) {
     const sampleText = document.getElementsByClassName('default-selection')[0] as HTMLElement
     editor.selectElement(sampleText)
