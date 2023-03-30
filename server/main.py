@@ -3,6 +3,7 @@ from fastapi.encoders import jsonable_encoder
 import uvicorn
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
+from fastapi.middleware.cors import CORSMiddleware
 import sqlalchemy
 from src.router import router
 import databases
@@ -18,6 +19,14 @@ engine = sqlalchemy.create_engine(
 init_database(engine, database)
 
 app = FastAPI()
+
+# Accept CORS requests
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_methods=["GET", "POST"],
+    allow_headers=["*"]
+)
 
 # Handles routing for the server
 app.include_router(router)
