@@ -1,7 +1,10 @@
 [server]
-port = 8080
+PORT = 6969
+
 
 [database]
-user = "postgres"
-password = "postgres"
-dbname = "cverify"
+DBURL = "sqlite:///./candidate.db"
+
+
+[client]
+URL = "http://localhost:3000"
