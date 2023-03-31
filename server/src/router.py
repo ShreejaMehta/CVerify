@@ -2,7 +2,7 @@ from typing import Union
 from fastapi import APIRouter
 from src.db import check_credentials, get_candidate, get_candidate_range
 from src.pdfanal.parser import parser
-from .models import ArgumentValidationError, ErrorResponse, ServerResponse, UserAuth, AuthResponse, ParseRequest, ParseResponse, CandidateInfo
+from .models import ErrorResponse, ServerResponse, UserAuth, AuthResponse, ParseRequest, ParseResponse, CandidateInfo
 from .auth import check_login, create_user
 
 router = APIRouter()
