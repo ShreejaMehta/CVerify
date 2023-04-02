@@ -36,13 +36,7 @@
 
 <script setup lang="ts">
   import { ref, onMounted } from 'vue'
-
-  import DashboardCharts from './DashboardCharts.vue'
-  import DashboardInfoBlock from './DashboardInfoBlock.vue'
-  import DashboardTabs from './DashboardTabs.vue'
-  import DashboardMap from './DashboardMap.vue'
-import axios from 'axios'
-  const dashboardMap = ref()
+  import axios from 'axios'
   interface Candidate {
     id: number
     name: string
@@ -65,9 +59,6 @@ import axios from 'axios'
       console.error(error)
     }
   })
-  function addAddressToMap({ city, country }: { city: { text: string }; country: string }) {
-    dashboardMap.value.addAddress({ city: city.text, country })
-  }
 </script>
 
 <style lang="scss">

@@ -18,27 +18,9 @@ export default {
         icon: 'vuestic-iconset-dashboard',
       },
     },
-    // {
-    //   name: 'statistics',
-    //   displayName: 'menu.statistics',
-    //   meta: {
-    //     icon: 'vuestic-iconset-statistics',
-    //   },
-    //   disabled: true,
-    //   children: [
-    //     {
-    //       name: 'charts',
-    //       displayName: 'menu.charts',
-    //     },
-    //     {
-    //       name: 'progress-bars',
-    //       displayName: 'menu.progressBars',
-    //     },
-    //   ],
-    // },
     {
       name: 'Resume',
-      displayName: 'menu.forms',
+      displayName: 'Resume ',
       meta: {
         icon: 'vuestic-iconset-forms',
       },

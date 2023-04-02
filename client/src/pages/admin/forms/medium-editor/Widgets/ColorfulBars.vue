@@ -16,6 +16,7 @@
       </div>
     </va-card-content>
   </va-card>
+  <!-- <h1>{{ userName }}</h1> -->
 </template>
 
 <script setup lang="ts">
@@ -26,6 +27,7 @@
 
   const value = ref(0)
   const colors = ref(['danger', 'success', 'info', 'secondary', 'warning', 'textDark'])
+
 
   onMounted(animateValue)
 
