@@ -13,9 +13,9 @@
         <va-card>
           <va-card-title> Upload Resume </va-card-title>
           <va-card-content>
-            <!-- <va-file-upload v-model="advancedList" dropzone @change = "handleFileUpload" /> -->
-            <va-input v-model="advancedList" class="mb-6" placeholder="Enter File Path" />
-            <button @click="handleFileUpload">Upload</button>
+            <!-- <va-file-upload v-model="advancedList" dropzone @change = "handleFileUpload(filePath)" /> -->
+            <va-input v-model="filePath" class="flex mb-6" placeholder="Enter File Path" />
+            <va-button @click="handleFileUpload(filePath)" class = "mb-6">Upload</va-button>
             <!-- <button @click="handleFileUpload">Upload</button> -->
           </va-card-content>
         </va-card>
@@ -61,28 +61,29 @@
   // const single = ref([])
   // const gallery = ref([])
   // const list = ref([])
-
-  // const handleFileUpload = async (filepath: string) => {
-  //   // const formData = new FormData()
-  //   // formData.append('filepath', filepath)
-  //   // console.log(formData)
-  //   // fetch(endpoint, {
-  //   //   method: 'POST',
-  //   //   body: formData,
-  //   // })
-  //   //   .then((response) => response.json())
-  //   //   .then((data) => console.log(data))
-  //   //   .catch((error) => console.error(error))
-  //   const data = { filepath: filepath }
-  //   axios
-  //     .post(endpoint, data)
-  //     .then((response) => {
-  //       console.log(response)
-  //     })
-  //     .catch((error) => {
-  //       console.error(error)
-  //     })
-  // }
+  const filePath = ref('')
+  const handleFileUpload = async (path: string) => {
+    // const formData = new FormData()
+    // formData.append('filepath', filepath)
+    // console.log(formData)
+    // fetch(endpoint, {
+    //   method: 'POST',
+    //   body: formData,
+    // })
+    //   .then((response) => response.json())
+    //   .then((data) => console.log(data))
+    //   .catch((error) => console.error(error))
+    const data = { path: filePath.value }
+    console.log(path)
+    axios
+      .post(endpoint, data)
+      .then((response) => {
+        console.log(response)
+      })
+      .catch((error) => {
+        console.error(error)
+      })
+  }
   // const handleFileUpload = () => {
   //   const formData = new FormData()
   //   formData.append('filepath', advancedList.value)
@@ -101,13 +102,15 @@
   //     console.error(error)
   //   })
   // }
-  const filePath = ref('')
 
-  const handleFileUpload = async () => {
-    const data = { file: filePath.value }
-    axios
-      .post(endpoint, data)
-      .then((response) => console.log(response))
-      .catch((error) => console.error(error))
-  }
+
+  // const handleFileUpload = async () => {
+  //   const data = { filePath: filePath.value }
+  //   console.log(filePath)
+  //   axios
+  //     .post(endpoint, data)
+  //     .then((response) => console.log(response.data))
+  //     .catch((error) => console.error(error))
+    
+  // }
 </script>
