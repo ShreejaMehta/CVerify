@@ -12,6 +12,7 @@ pandas = "*"
 sqlalchemy = "*"
 databases = {extras = ["aiosqlite"], version = "*"}
 toml = "*"
+python-multipart = "*"
 
 [dev-packages]
 
