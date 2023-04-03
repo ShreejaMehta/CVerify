@@ -1,21 +1,78 @@
 <template>
-  <div class="file-upload">
-    <div class="row">
-      <div class="flex xs12">
-        <va-card>
-          <va-card-title>{{ t('fileUpload.advancedUploadList') }}</va-card-title>
-          <va-card-content>
-            <va-file-upload v-model="advancedList" dropzone />
-          </va-card-content>
-        </va-card>
-      </div>
-    </div>
-  </div>
+	<div class="file-upload"> 
+		<div class='row'>
+			<div class="flex xs12">
+				<va-card>
+					<va-card-title>Resume Upload</va-card-title>
+					<va-card-content>
+						<va-file-upload v-model="fileList" file-types=".pdf" dropzone @onchange="handleUpload" />
+					</va-card-content>
+					<!-- TODO: Center the Button -->
+					<va-button v-if="fileList.length > 0" icon="upload" :onclick="handleUpload">Upload?</va-button>
+				</va-card>
+			</div>
+		</div>
+		<va-card>
+			<va-card-title>Uploaded Resumes!</va-card-title>
+			<va-card-content>
+				<div class="va-table-responsive">
+					<table class="va-table va-table--clickable">
+						<thead>
+							<tr>
+								<th>FileName</th>
+								<th>Status</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr v-for="candidate in candidateList" :key="candidate.candidateId"
+								v-on:click="handleOnClick(candidate)">
+								<td>{{ candidate.fileName }}</td>
+								<va-badge text="Analyzed" color="success" class="ma-2" />
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</va-card-content>
+		</va-card>
+	</div>
 </template>
 
 <script setup lang="ts">
-  import { ref } from 'vue'
+import axios from 'axios';
+import { ref } from 'vue';
 
-  const advancedList = ref([])
+type Candidate = {
+	fileName: string;
+	candidateId: number;
+}
 
+const fileList = ref<any>([]) // Bad Coding practice
+const candidateList = ref<Candidate[]>([])
+
+const handleOnClick = (candidate: Candidate) => {
+	console.log(candidate);
+	// TODO: Redirect to the candidate page
+}
+
+const handleUpload = async () => {
+	for (let file of fileList.value) {
+		// TODO: Add error handling for axios
+		let resp = await axios.post(
+			'http://localhost:6969/upload',
+			{
+				file: file,
+			},
+			{
+				headers: {
+					'Content-Type': 'multipart/form-data',
+				},
+			},
+		)
+		candidateList.value.push({
+			fileName: file.name,
+			candidateId: resp.data['candidate_id'],
+		})
+		console.log(candidateList.value)
+	}
+}
 </script>

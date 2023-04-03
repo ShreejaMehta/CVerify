@@ -1,9 +1,10 @@
 from typing import Union
-from fastapi import APIRouter
+from fastapi import APIRouter, UploadFile, File
 from src.db import check_credentials, get_candidate, get_candidate_range
 from src.pdfanal.parser import parser
 from .models import ErrorResponse, ServerResponse, UserAuth, AuthResponse, ParseRequest, ParseResponse, CandidateInfo
 from .auth import check_login, create_user
+import tempfile
 
 router = APIRouter()
 
@@ -42,12 +43,13 @@ parser_description = """
 - path: local path where the resume is stored
 """
 
-
-@router.post("/parse", description=parser_description)
+@router.post("/parse", description=parser_description, include_in_schema=False)
 async def parse(req: ParseRequest) -> ParseResponse:
     """
     TODO: Handle validation errors
     TODO: Handle emptpy body: 422 Unprocessable Entity
+
+    NOTE: This is deprecated as of now, use /upload api
     """
     path = req.path
 
@@ -56,20 +58,28 @@ async def parse(req: ParseRequest) -> ParseResponse:
 
     return ParseResponse(candidate_id=id, message=msg if msg else "")
 
+# File uploader
+@router.post("/upload")
+async def upload_file(file: UploadFile = File(...)) -> ParseResponse:
+    """
+    takes in a resume parses it and returns the candidate id stored in the database
+
+    TODO: Add file validation
+    """
+
+    # Save the file in temp dir 
+    with tempfile.NamedTemporaryFile(mode="wb", suffix=".pdf") as temp:
+        temp.write(await file.read())
+        path = temp.name
+
+        print(path)
+        id, msg = await parser(path)
+        return ParseResponse(candidate_id=id, message=msg if msg else "")
+
 
 # Get Candidate info
 @router.get("/candidate/{candidate_id}")
 async def get_details(candidate_id: int) -> Union[CandidateInfo, ErrorResponse]:
-    # info = CandidateInfo(
-    #     name="Asad",
-    #     number="100",
-    #     email="asad@azad.com",
-    #     skills=[],
-    #     education=[],
-    #     github="asad",
-    #     linkedin="https://google.com",
-    # )
-    # id = await insert_candidate(info)
     cand = await get_candidate(candidate_id)
 
     if not cand:
