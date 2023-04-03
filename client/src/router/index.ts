@@ -21,23 +21,23 @@ const routes: Array<RouteRecordRaw> = [
         path: 'dashboard',
         component: () => import('../pages/admin/dashboard/Dashboard.vue'),
       },
-	  {
-		name: "user",
-		path: "/user",
-		component: RouteViewComponent,
-		children: [
-		  {
-			name: "user-info",
-			path: "user-info",
-			component: () => import('../pages/user/UserInfo.vue'),
-		  },
-			{	
-				name: "user-upload",
-				path: "user-upload",
-				component: () => import('../pages/user/UserUpload.vue'),
-			}
-		]
-	  },
+      {
+        name: 'user',
+        path: '/user',
+        component: RouteViewComponent,
+        children: [
+          {
+            name: 'user-info',
+            path: 'user-info',
+            component: () => import('../pages/user/UserInfo.vue'),
+          },
+          {
+            name: 'user-upload',
+            path: 'user-upload',
+            component: () => import('../pages/user/UserUpload.vue'),
+          },
+        ],
+      },
       {
         name: 'pages',
         path: 'pages',
