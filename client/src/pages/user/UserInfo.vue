@@ -90,4 +90,3 @@
     editor.selectElement(sampleText)
   }
 </script>
-
