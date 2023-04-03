@@ -31,9 +31,11 @@
 <script setup lang="ts">
   import { ref, onMounted } from 'vue'
   import axios from 'axios'
-import { routerViewLocationKey } from 'vue-router';
-import { isTemplateElement } from '@babel/types';
-import router from '../../../router';
+  import { routerViewLocationKey } from 'vue-router'
+  import { isTemplateElement } from '@babel/types'
+  import router from '../../../router'
+import { userInfo } from 'os'
+import UserInfo from '../../user/UserInfo.vue'
   interface Candidate {
     id: number
     name: string
@@ -47,9 +49,10 @@ import router from '../../../router';
     status: string
   }
   const candidates = ref<Candidate[]>([])
-
+ 
   const handleClick = (event: any) => {
-    router.push('/user/user-info')
+    console.log(event)
+    const routes = [{ path: '/user/user-info', component: UserInfo, props: true }]
   }
   const columns = [
     { key: 'id', sortable: true },
@@ -57,6 +60,7 @@ import router from '../../../router';
     { key: 'email', sortable: true },
     { key: 'status', width: 80 },
   ]
+
   onMounted(async () => {
     try {
       const response = await axios.get('http://localhost:6969/summary/100')
