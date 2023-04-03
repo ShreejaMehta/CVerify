@@ -13,10 +13,10 @@
         <va-card>
           <va-card-title> Upload Resume </va-card-title>
           <va-card-content>
-            <!-- <va-file-upload v-model="advancedList" dropzone @change = "handleFileUpload(filePath)" /> -->
-            <va-input v-model="filePath" class="flex mb-6" placeholder="Enter File Path" />
-            <va-button @click="handleFileUpload(filePath)" class = "mb-6">Upload</va-button>
-            <!-- <button @click="handleFileUpload">Upload</button> -->
+            <va-file-upload v-model="advancedList" dropzone />
+            <!-- <va-input v-model="filePath" class="flex mb-6" placeholder="Enter File Path" />
+            <va-button @click="handleFileUpload(filePath)" class = "mb-6">Upload</va-button> -->
+            <button @click="handleFileUpload(advancedList)">Upload</button>
           </va-card-content>
         </va-card>
       </div>
@@ -74,11 +74,13 @@
     //   .then((data) => console.log(data))
     //   .catch((error) => console.error(error))
     const data = { path: filePath.value }
-    console.log(path)
+    console.log(path[0])
+
     axios
-      .post(endpoint, data)
-      .then((response) => {
-        console.log(response)
+      .post('http://localhost:6969/parse', path[0], {
+        headers: {
+          'Content-Type': 'application/pdf',
+        },
       })
       .catch((error) => {
         console.error(error)
@@ -103,7 +105,6 @@
   //   })
   // }
 
-
   // const handleFileUpload = async () => {
   //   const data = { filePath: filePath.value }
   //   console.log(filePath)
@@ -111,6 +112,6 @@
   //     .post(endpoint, data)
   //     .then((response) => console.log(response.data))
   //     .catch((error) => console.error(error))
-    
+
   // }
 </script>

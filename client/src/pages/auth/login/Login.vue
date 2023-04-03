@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent="onsubmit">
+  <form @submit.prevent="">
     <va-input
       v-model="email"
       class="mb-3"
@@ -24,7 +24,7 @@
     </div>
 
     <div class="d-flex justify-center mt-3">
-      <va-button class="my-0" @click="handleLogin(email,password)">{{ t('auth.login') }}</va-button>
+      <va-button class="my-0" @click="handleLogin(email, password)">{{ t('auth.login') }}</va-button>
     </div>
   </form>
 </template>
@@ -53,24 +53,25 @@
 
     router.push({ name: 'dashboard' })
   }
-  const endpoint= 'http://localhost:6969/auth/login'
-  const handleLogin = async (username: string, password: string) =>
-  {
-    const data = { username: username , password: password}
-    console.log(data)
-    axios
-      .post(endpoint, data)
-      .then((response) => {
-        console.log(response)
-      })
-      .catch((error) => {
-        console.error(error)
-      })
-      if (!formReady.value) return
+  const endpoint = 'http://localhost:6969/auth/login'
+  const data = { username: String, password: String, logged_in: String }
+  // const handleLogin = async (username: string, password: string) =>
+  // {
+  //   const data2 = { username: username, password: password }
+  //   axios
+  //     .post(endpoint, data2)
+  //     .then((response) => {
+  //       // data2= response
+  //       console.log(data)
+  //       router.push({ name: 'dashboard' })
+  //     })
+  //     .catch((error) => {
+  //       console.error(error)
+  //     })
+  //     if (!formReady.value) return
 
-    emailErrors.value = email.value? [] : ['Email is required']
-    passwordErrors.value = password ? [] : ['Password is required']
+  //   emailErrors.value = email.value? [] : ['Email is required']
+  //   passwordErrors.value = password ? [] : ['Password is required']
 
-    router.push({ name: 'dashboard' })
-  }
+  // }
 </script>

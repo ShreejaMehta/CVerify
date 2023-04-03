@@ -99,9 +99,9 @@
     urls: [],
     status: '',
   })
-  const gh = ref ({
-    userName : '',
-    avatarUrl : '',
+  const gh = ref({
+    userName: '',
+    avatarUrl: '',
   })
   onMounted(async () => {
     try {

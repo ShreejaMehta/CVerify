@@ -1,6 +1,6 @@
 <template>
   <div>
-    <img src="./icons/logo.svg" :style="{ height: props.height + 'px', width: 'auto' }">
+    <img src="./icons/logo.svg" :style="{ height: props.height + 'px', width: 'auto' }" />
   </div>
 </template>
 

@@ -28,7 +28,6 @@
   const value = ref(0)
   const colors = ref(['danger', 'success', 'info', 'secondary', 'warning', 'textDark'])
 
-
   onMounted(animateValue)
 
   function animateValue() {

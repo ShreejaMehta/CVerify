@@ -82,7 +82,7 @@
   import data from '../../../../data/tables/markup-table/data.json'
   import { VaCard, VaCardContent, VaCardTitle } from 'vuestic-ui'
   import axios, { AxiosResponse } from 'axios'
-  import Vue,{onMounted} from 'vue'
+  import Vue, { onMounted } from 'vue'
   import console from 'console'
   import VueAxios from 'vue-axios'
 

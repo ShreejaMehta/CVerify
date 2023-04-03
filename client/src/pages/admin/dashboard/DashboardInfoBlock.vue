@@ -106,8 +106,8 @@
   const { colors } = useColors()
 
   interface Candidate {
-    id: number,
-    name: string,
+    id: number
+    name: string
     number: string
     email: string
     skills: string[]
