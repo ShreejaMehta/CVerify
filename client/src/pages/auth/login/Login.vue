@@ -24,7 +24,7 @@
     </div>
 
     <div class="d-flex justify-center mt-3">
-      <va-button class="my-0" @click="handleLogin(email, password)">{{ t('auth.login') }}</va-button>
+      <!-- <va-button class="my-0" @click="handleLogin(email, password)">{{ t('auth.login') }}</va-button> -->
     </div>
   </form>
 </template>
