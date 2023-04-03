@@ -26,7 +26,6 @@
           </va-card>
         </div>
         <div class="flex">
-          <ColorfulBars />
           <br />
           <va-card class="xs12 sm6 md12">
             <va-card-title>Github Data</va-card-title>
@@ -44,37 +43,6 @@
         </va-card>
       </div>
     </div>
-    <!-- <div class="flex md12">
-        <va-card>
-          <va-card-title>{{ t('forms.mediumEditor.title') }}</va-card-title>
-          <va-card-content class="d-flex justify-center">
-            <va-medium-editor @initialized="handleEditorInitialization">
-              <h1>Select Text To Open Editor</h1>
-              <p>
-                You enter into your favorite local bar looking
-                <span class="default-selection"><b>good</b></span> as hell, but you know the only heads you want to
-                turn—spicy & stylish alpha bitches — are heavily fixated on the D. The hot girl talks to you, but she
-                only wants to be your best friend. Her nonthreatening and attentive best friend. Receiver of sexy
-                selfies, listener of stories. Meanwhile, you attract unwanted attention from straight men, pudgy and
-                greasy moths to your emotionally distant flame.
-              </p>
-              <p>
-                Read the full article on
-                <a href="https://medium.com/@dorn.anna/girl-no-you-dont-2e21e826c62c">Medium</a>
-              </p>
-            </va-medium-editor>
-          </va-card-content>
-        </va-card>
-      </div> -->
-    <!-- <div class=" flex xs8 md3">
-        <va-avatar size="150px" font-size="30px">
-          <i class="fas fa-user-alt" style="font-size: 80px"></i>
-        </va-avatar> 
-      </div>
-      <va-card class="flex ">
-        <va-card-title>Basic Details</va-card-title>
-        <va-card-content>Name:{{  }}</va-card-content>
-      </va-card> -->
   </div>
 </template>
 
@@ -82,10 +50,7 @@
   import { nextTick } from 'vue'
   import { useI18n } from 'vue-i18n'
   import type MediumEditor from 'medium-editor'
-  import ColorfulBars from './Widgets/ColorfulBars.vue'
   import { useColors } from 'vuestic-ui'
-  // import VaMediumEditor from '../../../../components/va-medium-editor/VaMediumEditor.vue'
-  // const { t } = useI18n()
   import { ref, onMounted } from 'vue'
   import axios from 'axios'
   const candidate = ref({
@@ -125,3 +90,4 @@
     editor.selectElement(sampleText)
   }
 </script>
+
