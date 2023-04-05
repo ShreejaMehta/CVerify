@@ -70,7 +70,7 @@
   })
   onMounted(async () => {
     try {
-      const response = await axios.get('http://localhost:6969/candidate/1')
+      const response = await axios.get(`http://localhost:6969/candidate/`)
       // const data = await response.json()
       candidate.value = response.data
       console.log(candidate.value)

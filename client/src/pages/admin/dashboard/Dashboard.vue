@@ -31,11 +31,8 @@
 <script setup lang="ts">
   import { ref, onMounted } from 'vue'
   import axios from 'axios'
-  import { routerViewLocationKey } from 'vue-router'
-  import { isTemplateElement } from '@babel/types'
   import router from '../../../router'
-import { userInfo } from 'os'
-import UserInfo from '../../user/UserInfo.vue'
+  import UserInfo from '../../user/UserInfo.vue'
   interface Candidate {
     id: number
     name: string
@@ -49,27 +46,25 @@ import UserInfo from '../../user/UserInfo.vue'
     status: string
   }
   const candidates = ref<Candidate[]>([])
- 
-  const handleClick = (event: any) => {
-    console.log(event)
-    const routes = [{ path: '/user/user-info', component: UserInfo, props: true }]
-  }
+
+  // const props = defineProps({
+  //   id: Number,
+  // })
+  // const User = {
+  //   props: ['id'],
+  //   template: UserInfo,
+  // }
   const columns = [
     { key: 'id', sortable: true },
     { key: 'name', sortable: true },
     { key: 'email', sortable: true },
     { key: 'status', width: 80 },
   ]
-
-  onMounted(async () => {
-    try {
-      const response = await axios.get('http://localhost:6969/summary/100')
-      // const data = await response.json()
-      candidates.value = response.data
-    } catch (error) {
-      console.error(error)
-    }
-  })
+  const handleClick = (event: any) => {
+    console.log(event.itemIndex)
+    const routes = [{ path: '/user/user-info/:id', redirect: { name: 'user-info' }, props: true }]
+    router.push({ name: 'user-info', params: { id: event.itemIndex + 1 } })
+  }
   function getStatusColor(status: string) {
     if (status === 'Accepted') {
       return 'success'
@@ -80,6 +75,16 @@ import UserInfo from '../../user/UserInfo.vue'
     }
     return 'danger'
   }
+
+  onMounted(async () => {
+    try {
+      const response = await axios.get('http://localhost:6969/summary/100')
+      // const data = await response.json()
+      candidates.value = response.data
+    } catch (error) {
+      console.error(error)
+    }
+  })
 </script>
 
 <style lang="scss">
