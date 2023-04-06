@@ -44,29 +44,45 @@
 </template>
 
 <script setup lang="ts">
-  import { ref, computed } from 'vue'
-  import { useRouter } from 'vue-router'
-  import { useI18n } from 'vue-i18n'
-  const { t } = useI18n()
+import { ref, computed } from 'vue'
+import { useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
+import axios from 'axios'
+const { t } = useI18n()
 
-  const email = ref('')
-  const password = ref('')
-  const agreedToTerms = ref(false)
-  const emailErrors = ref<string[]>([])
-  const passwordErrors = ref<string[]>([])
-  const agreedToTermsErrors = ref<string[]>([])
+const email = ref('')
+const password = ref('')
+const agreedToTerms = ref(false)
+const emailErrors = ref<string[]>([])
+const passwordErrors = ref<string[]>([])
+const agreedToTermsErrors = ref<string[]>([])
 
-  const formReady = computed(() => {
-    return !(emailErrors.value.length || passwordErrors.value.length || agreedToTermsErrors.value.length)
-  })
+const formReady = computed(() => {
+  return !(emailErrors.value.length || passwordErrors.value.length || agreedToTermsErrors.value.length)
+})
 
-  function onsubmit() {
-    if (!formReady.value) return
+const validate = async (username: string, password: string) => {
+  const endpoint = 'http://localhost:6969/auth/register'
+  const data = { username: username, password: password }
+  axios
+    .post(endpoint, data)
+    .then((response) => {
+      // data2= response
+      console.log(response)
+      router.push({ name: 'dashboard' })
+    })
+    .catch((error) => {
+      console.error(error)
+    })
+}
 
-    emailErrors.value = email.value ? [] : ['Email is required']
-    passwordErrors.value = password.value ? [] : ['Password is required']
-    agreedToTermsErrors.value = agreedToTerms.value ? [] : ['You must agree to the terms of use to continue']
+function onsubmit() {
+  if (!formReady.value) return
 
-    useRouter().push({ name: 'dashboard' })
-  }
+  emailErrors.value = email.value ? [] : ['Email is required']
+  passwordErrors.value = password.value ? [] : ['Password is required']
+  agreedToTermsErrors.value = agreedToTerms.value ? [] : ['You must agree to the terms of use to continue']
+  validate(email.value, password.value)
+  useRouter().push({ name: 'dashboard' })
+}
 </script>

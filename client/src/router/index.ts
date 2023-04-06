@@ -28,12 +28,12 @@ const routes: Array<RouteRecordRaw> = [
         children: [
           {
             name: 'user-info',
-            path: 'user-info',
+            path: '/user-info/:id',
             component: () => import('../pages/user/UserInfo.vue'),
           },
           {
             name: 'user-upload',
-            path: 'user-upload',
+            path: '/user-upload',
             component: () => import('../pages/user/UserUpload.vue'),
           },
         ],

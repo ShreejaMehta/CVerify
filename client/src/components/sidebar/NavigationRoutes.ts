@@ -19,22 +19,12 @@ export default {
       },
     },
     {
-      name: 'Resume',
-      displayName: 'menu.forms',
+      name: 'user-upload',
+      displayName: 'Resume upload',
       meta: {
         icon: 'vuestic-iconset-forms',
       },
       disabled: true,
-      children: [
-        {
-          name: 'user-info',
-          displayName: 'User Dashboard',
-        },
-        {
-          name: 'user-upload',
-          displayName: 'Resume upload',
-        },
-      ],
     },
   ] as INavigationRoute[],
 }

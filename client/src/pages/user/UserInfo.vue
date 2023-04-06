@@ -38,7 +38,7 @@
         </div>
       </div>
       <div class="flex xs12 sm6 md12 xl12">
-        <va-card class="row row-seperated">
+        <va-card class="row row-separated">
           <va-card-content> LinkedIN </va-card-content>
         </va-card>
       </div>
@@ -47,46 +47,50 @@
 </template>
 
 <script setup lang="ts">
-  import { nextTick } from 'vue'
-  import { useI18n } from 'vue-i18n'
-  import type MediumEditor from 'medium-editor'
-  import { useColors } from 'vuestic-ui'
-  import { ref, onMounted } from 'vue'
-  import axios from 'axios'
-  const candidate = ref({
-    id: null,
-    name: '',
-    email: '',
-    skills: [],
-    education: [],
-    github: '',
-    linkedin: '',
-    urls: [],
-    status: '',
-  })
-  const gh = ref({
-    userName: '',
-    avatarUrl: '',
-  })
-  onMounted(async () => {
-    try {
-      const response = await axios.get(`http://localhost:6969/candidate/`)
-      // const data = await response.json()
-      candidate.value = response.data
-      console.log(candidate.value)
-      // const res = await axios.get(`https://api.github.com/users/`)
-      // console.log(res.data)
-      // gh.value = res.data
-    } catch (error) {
-      console.error(error)
-    }
-  })
-  const { colors } = useColors()
-  function handleEditorInitialization(editor: typeof MediumEditor) {
-    nextTick(() => highlightSampleText(editor))
+import { nextTick } from 'vue'
+import { useI18n } from 'vue-i18n'
+import type MediumEditor from 'medium-editor'
+import { useRouter } from 'vue-router'
+import { useColors } from 'vuestic-ui'
+import { ref, onMounted } from 'vue'
+import axios from 'axios'
+
+const router = useRouter()
+const candidate = ref({
+  id: null,
+  name: '',
+  email: '',
+  skills: [],
+  education: [],
+  github: '',
+  linkedin: '',
+  urls: [],
+  status: '',
+})
+const gh = ref({
+  login: '',
+  avatar_url: '',
+})
+onMounted(async () => {
+  const id = router.currentRoute.value.params.id
+  try {
+    const response = await axios.get(`http://localhost:6969/candidate/${id}`)
+    candidate.value = response.data
+    const name = candidate.value.github
+    const res = await axios.get(`https://api.github.com/users/${name}`)
+    // console.log(res.data)
+    gh.value = res.data
+    console.log(gh.value.avatar_url)
+  } catch (error) {
+    console.error(error)
   }
-  function highlightSampleText(editor: typeof MediumEditor) {
-    const sampleText = document.getElementsByClassName('default-selection')[0] as HTMLElement
-    editor.selectElement(sampleText)
-  }
+})
+const { colors } = useColors()
+function handleEditorInitialization(editor: typeof MediumEditor) {
+  nextTick(() => highlightSampleText(editor))
+}
+function highlightSampleText(editor: typeof MediumEditor) {
+  const sampleText = document.getElementsByClassName('default-selection')[0] as HTMLElement
+  editor.selectElement(sampleText)
+}
 </script>
