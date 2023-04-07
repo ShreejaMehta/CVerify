@@ -53,7 +53,7 @@
             /> -->
         </div>
       </div>
-
+      
       <div class="flex xs12 sm6 md12 xl12">
         <va-card class="row row-separated">
           <va-card-content> LinkedIN </va-card-content>
