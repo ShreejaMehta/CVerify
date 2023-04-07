@@ -3,11 +3,11 @@
     <div class="row row-equal">
       <div class="row">
         <div class="flex xs12 xl3 md12">
-          <va-card>
+          <va-card class="flex">
             <va-card-content>
               <div class="row row-separated">
                 <div class="flex xs12">
-                  <h2 class="va-h2 ma-0 va-text-center">
+                  <h2 class="va-h2 ma-5 va-text-center">
                     <va-avatar size="150px">
                       <!-- <i class="fas fa-user-alt" style="font-size: 100px"> </i> -->
                       <img v-bind:src="gh.avatar_url" />
@@ -20,39 +20,37 @@
                   <va-card-content>Name: {{ candidate.name }} </va-card-content>
                   <va-card-content>Email: {{ candidate.email }}</va-card-content>
                   <va-card-content>Github: {{ candidate.github }}</va-card-content>
-                  <p class="va-text-center no-wrap"></p>
+
                 </div>
               </div>
             </va-card-content>
           </va-card>
-          <br />
-          <va-card class="flex">
-            <va-card-content>
-              <h2 class="va-h2 ma-0" :style="{ color: colors.info }">{{ gh.public_repos }}</h2>
-              <p class="no-wrap">Public Repos</p>
-            </va-card-content>
-          </va-card>
-          <br />
-          <va-card class="flex">
-            <va-card-content>
-              <h2 class="va-h2 ma-0" :style="{ color: colors.primary }">123</h2>
-              <p class="no-wrap">Total Commits</p>
-            </va-card-content>
-          </va-card>
-          <br />
-          <va-card class="flex flex-col gap-2">
-            <va-card-title>Skills</va-card-title>
-            <va-card-content>
-              <va-progress-bar :model-value=gh.public_repos color="success" />
-            </va-card-content>
-          </va-card>
         </div>
-        <div class="flex md9">
-          <va-card>
-            <va-card-title>Repositories</va-card-title>
-            <!-- Fetch data from Github API-->
-            <va-data-table :items="repos" :columns="columns" />
-          </va-card>
+        <div class="flex md9 xs12">
+          <!-- Fetch data from Github API-->
+          <!-- <va-data-table :items="repos" :columns="columns" /> -->
+          <img
+            :src="`http://github-profile-summary-cards.vercel.app/api/cards/stats?username=${candidate.github}&theme=github`"
+
+          />
+
+          <img
+            :src="`http://github-profile-summary-cards.vercel.app/api/cards/repos-per-language?username=${candidate.github}&theme=github&exclude={exclude}`"
+
+          />
+
+          <img
+            :src="`http://github-profile-summary-cards.vercel.app/api/cards/most-commit-language?username=${candidate.github}&theme=github&exclude={exclude}`"
+
+          />
+
+          <img
+            :src="`https://github-profile-summary-cards.vercel.app/api/cards/profile-details?username=${candidate.github}&theme=github`"
+            style="width: 90%"
+          />
+          <!-- <img
+              :src="`http://github-profile-summary-cards.vercel.app/api/cards/productive-time?username=${candidate.github}&theme=github&utcOffset={utcOffset}`"
+            /> -->
         </div>
       </div>
 
@@ -98,7 +96,7 @@ interface Repos {
   forks: number
 }
 const repos = ref<Repos[]>([])
-
+const githubProfileSummaryUrl = ref('')
 const columns = [
   { key: 'name', sortable: true },
   { key: 'forks', sortable: true },
@@ -114,11 +112,12 @@ onMounted(async () => {
     gh.value = res.data
     const rep = await axios.get(`https://api.github.com/users/${name}/repos`)
     repos.value = rep.data
-    // console.log(repos.value[3].name)
+    // console.log(repos.value[3].name) 
   } catch (error) {
     console.error(error)
   }
 })
+
 const { colors } = useColors()
 function handleEditorInitialization(editor: typeof MediumEditor) {
   nextTick(() => highlightSampleText(editor))
@@ -128,3 +127,5 @@ function highlightSampleText(editor: typeof MediumEditor) {
   editor.selectElement(sampleText)
 }
 </script>
+<style>
+</style>
