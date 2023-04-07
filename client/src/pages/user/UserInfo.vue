@@ -9,12 +9,13 @@
                 <div class="flex xs12">
                   <h2 class="va-h2 ma-0 va-text-center">
                     <va-avatar size="150px">
-                      <i class="fas fa-user-alt" style="font-size: 100px"> </i>
+                      <!-- <i class="fas fa-user-alt" style="font-size: 100px"> </i> -->
+                      <img v-bind:src="gh.avatar_url" />
                     </va-avatar>
                   </h2>
                   <p class="va-text-center"></p>
                 </div>
-                <div class="flex xs6 xl3">
+                <div class="flex">
                   <va-card-title>Basic Details</va-card-title>
                   <va-card-content>Name: {{ candidate.name }} </va-card-content>
                   <va-card-content>Email: {{ candidate.email }}</va-card-content>
@@ -24,19 +25,37 @@
               </div>
             </va-card-content>
           </va-card>
-        </div>
-        <div class="flex">
           <br />
-          <va-card class="xs12 sm6 md12">
-            <va-card-title>Github Data</va-card-title>
-            <!-- Fetch data from Github API-->
+          <va-card class="flex">
             <va-card-content>
-              <h2 class="va-h2 ma-0" :style="{ color: colors.primary }"></h2>
-              <p class="no-wrap">Completed Pull Requests</p>
+              <h2 class="va-h2 ma-0" :style="{ color: colors.info }">{{ gh.public_repos }}</h2>
+              <p class="no-wrap">Public Repos</p>
+            </va-card-content>
+          </va-card>
+          <br />
+          <va-card class="flex">
+            <va-card-content>
+              <h2 class="va-h2 ma-0" :style="{ color: colors.primary }">123</h2>
+              <p class="no-wrap">Total Commits</p>
+            </va-card-content>
+          </va-card>
+          <br />
+          <va-card class="flex flex-col gap-2">
+            <va-card-title>Skills</va-card-title>
+            <va-card-content>
+              <va-progress-bar :model-value=gh.public_repos color="success" />
             </va-card-content>
           </va-card>
         </div>
+        <div class="flex md9">
+          <va-card>
+            <va-card-title>Repositories</va-card-title>
+            <!-- Fetch data from Github API-->
+            <va-data-table :items="repos" :columns="columns" />
+          </va-card>
+        </div>
       </div>
+
       <div class="flex xs12 sm6 md12 xl12">
         <va-card class="row row-separated">
           <va-card-content> LinkedIN </va-card-content>
@@ -54,6 +73,7 @@ import { useRouter } from 'vue-router'
 import { useColors } from 'vuestic-ui'
 import { ref, onMounted } from 'vue'
 import axios from 'axios'
+import { Interface } from 'readline'
 
 const router = useRouter()
 const candidate = ref({
@@ -70,7 +90,19 @@ const candidate = ref({
 const gh = ref({
   login: '',
   avatar_url: '',
+  public_repos: '',
 })
+interface Repos {
+  name: string
+  url: string
+  forks: number
+}
+const repos = ref<Repos[]>([])
+
+const columns = [
+  { key: 'name', sortable: true },
+  { key: 'forks', sortable: true },
+]
 onMounted(async () => {
   const id = router.currentRoute.value.params.id
   try {
@@ -80,7 +112,9 @@ onMounted(async () => {
     const res = await axios.get(`https://api.github.com/users/${name}`)
     // console.log(res.data)
     gh.value = res.data
-    console.log(gh.value.avatar_url)
+    const rep = await axios.get(`https://api.github.com/users/${name}/repos`)
+    repos.value = rep.data
+    // console.log(repos.value[3].name)
   } catch (error) {
     console.error(error)
   }
