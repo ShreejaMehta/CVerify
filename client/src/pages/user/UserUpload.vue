@@ -8,7 +8,10 @@
             <va-file-upload v-model="fileList" file-types=".pdf" dropzone @onchange="handleUpload" />
           </va-card-content>
           <!-- TODO: Center the Button -->
-          <va-button v-if="fileList.length > 0" icon="upload" :onclick="handleUpload">Upload?</va-button>
+          <div class="row justify-center">
+            <va-button v-if="fileList.length > 0" icon="upload" :onclick="handleUpload">Upload?</va-button>
+          </div>
+          <br />
         </va-card>
       </div>
     </div>
@@ -76,9 +79,9 @@ const handleUpload = async () => {
         console.log(candidateList.value)
       })
       .catch(
-        (error) => {
-          console.log(error)
-        }
+        (err) => {
+          console.log(err)
+        },
       )
   }
 }
