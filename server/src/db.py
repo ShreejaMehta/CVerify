@@ -88,3 +88,14 @@ async def get_candidate_range(limit: int) -> list[CandidateInfo]:
         convert_into_candidate_model(info)
         for info in resp
     ]
+
+
+async def update_candidate_status(id: int, status: bool) -> bool:
+    """
+    Updates the current candidate acceptance status
+    """
+    query = candidate_info.update().where(candidate_info.c.id == id).values(status="Accepted" if status else "Rejected")
+    res = await get_db().execute(query)
+    print(res)
+
+    return True

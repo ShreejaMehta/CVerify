@@ -1,6 +1,6 @@
 from typing import Union
 from fastapi import APIRouter, UploadFile, File
-from src.db import check_credentials, get_candidate, get_candidate_range
+from src.db import check_credentials, get_candidate, get_candidate_range, update_candidate_status
 from src.pdfanal.parser import parser
 from .models import ErrorResponse, ServerResponse, UserAuth, AuthResponse, ParseRequest, ParseResponse, CandidateInfo
 from .auth import check_login, create_user
@@ -86,6 +86,15 @@ async def get_details(candidate_id: int) -> Union[CandidateInfo, ErrorResponse]:
         return ErrorResponse(message="Candidate id not found", code=1)
 
     return cand
+
+@router.get("/candidate/{candidate_id}/{status}")
+async def get_status(candidate_id: int, status: bool) -> Union[ServerResponse, ErrorResponse]:
+    success: bool = await update_candidate_status(candidate_id, status)
+
+    if not success:
+        return ErrorResponse(message="Candidate id not found", code=-1)
+
+    return ServerResponse(message="Success", code=1)
 
 
 @router.get("/summary/{limit}")
