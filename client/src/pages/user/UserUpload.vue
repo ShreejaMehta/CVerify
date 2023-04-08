@@ -56,22 +56,30 @@ const handleOnClick = (candidate: Candidate) => {
 const handleUpload = async () => {
   for (let file of fileList.value) {
     // TODO: Add error handling for axios
-    let resp = await axios.post(
-      'http://localhost:6969/upload',
-      {
-        file: file,
-      },
-      {
-        headers: {
-          'Content-Type': 'multipart/form-data',
+    let resp = await axios
+      .post(
+        'http://localhost:6969/upload',
+        {
+          file: file,
         },
-      },
-    )
-    candidateList.value.push({
-      fileName: file.name,
-      candidateId: resp.data['candidate_id'],
-    })
-    console.log(candidateList.value)
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        },
+      )
+      .then((resp) => {
+        candidateList.value.push({
+          fileName: file.name,
+          candidateId: resp.data['candidate_id'],
+        })
+        console.log(candidateList.value)
+      })
+      .catch(
+        (error) => {
+          console.log(error)
+        }
+      )
   }
 }
 </script>

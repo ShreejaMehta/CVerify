@@ -49,7 +49,7 @@ import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import axios from 'axios'
 const { t } = useI18n()
-
+const router = useRouter()
 const email = ref('')
 const password = ref('')
 const agreedToTerms = ref(false)
