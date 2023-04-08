@@ -42,7 +42,8 @@
 <script setup lang="ts">
 import axios from 'axios'
 import { ref } from 'vue'
-
+import { useRouter } from 'vue-router'
+const router = useRouter()
 type Candidate = {
   fileName: string
   candidateId: number
@@ -54,6 +55,7 @@ const candidateList = ref<Candidate[]>([])
 const handleOnClick = (candidate: Candidate) => {
   console.log(candidate)
   // TODO: Redirect to the candidate page
+  router.push({ path: `/user-info/${candidate.candidateId}`})
 }
 
 const handleUpload = async () => {
