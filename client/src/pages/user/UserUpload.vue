@@ -55,7 +55,7 @@ const candidateList = ref<Candidate[]>([])
 const handleOnClick = (candidate: Candidate) => {
   console.log(candidate)
   // TODO: Redirect to the candidate page
-  router.push({ path: `/user-info/${candidate.candidateId}`})
+  router.push({ path: `/user-info/${candidate.candidateId}` })
 }
 
 const handleUpload = async () => {
@@ -80,11 +80,9 @@ const handleUpload = async () => {
         })
         console.log(candidateList.value)
       })
-      .catch(
-        (err) => {
-          console.log(err)
-        },
-      )
+      .catch((err) => {
+        console.log(err)
+      })
   }
 }
 </script>

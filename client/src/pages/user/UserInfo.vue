@@ -44,13 +44,21 @@
             :src="`https://github-profile-summary-cards.vercel.app/api/cards/profile-details?username=${candidate.github}&theme=github`"
             style="width: 90%"
           />
-          x
         </div>
       </div>
 
-      <div class="flex xs12 sm6 md12 xl12">
+      <div class="flex">
         <va-card class="row row-separated">
-          <va-card-content> LinkedIN </va-card-content>
+          <va-card-title>Skills</va-card-title>
+          <va-card-content>
+            <div class="flex xs12">
+              <va-chip-group>
+                <va-chip v-for="skill in candidate.skills" :key="skill" color="primary" style="margin: 8px">
+                  {{ skill }}
+                </va-chip>
+              </va-chip-group>
+            </div>
+          </va-card-content>
         </va-card>
       </div>
     </div>
@@ -107,4 +115,5 @@ onMounted(async () => {
   }
 })
 </script>
-<style></style>
+<style>
+</style>
