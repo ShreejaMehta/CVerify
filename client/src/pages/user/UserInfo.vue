@@ -67,8 +67,10 @@
       <va-card>
         <va-card-title>Actions </va-card-title>
         <va-card-content>
-          <va-button icon="arrow_forward" icon-color="#fff" class="flex" style="margin: 8px"> Accept </va-button>
-          <va-button icon="clear" color="danger" class="flex" style="margin: 8px"> Reject </va-button>
+          <va-button icon="arrow_forward" icon-color="#fff" class="flex" style="margin: 8px" @click="accept()"
+            >Accept
+          </va-button>
+          <va-button icon="clear" color="danger" class="flex" style="margin: 8px" @click="reject()"> Reject </va-button>
         </va-card-content>
       </va-card>
     </div>
@@ -109,25 +111,30 @@ onMounted(async () => {
     const response = await axios.get(`http://localhost:6969/candidate/${id}`)
     candidate.value = response.data
     const name = candidate.value.github
-    // const linkedin = candidate.value.linkedin
     const res = await axios.get(`https://api.github.com/users/${name}`)
-    // console.log(res.data)
     gh.value = res.data
     const rep = await axios.get(`https://api.github.com/users/${name}/repos`)
     repos.value = rep.data
-
-    // to fetch data from linkedin
-    // const rem = await axios.get(`https://api.linkedin.com/v2/`)
-    // console.log(rem.data)
-    // console.log(repos.value[3].name)
   } catch (error) {
     console.error(error)
   }
 })
-
-const handleStatus = () => {
+const accept = () => {
   const id = router.currentRoute.value.params.id
-  console.log(candidate.value.status)
+
+  try {
+    const response = axios.get(`http://localhost:6969/candidate/${id}/true`)
+  } catch (err) {
+    console.error(err)
+  }
+}
+const reject = () => {
+  const id = router.currentRoute.value.params.id
+  try {
+    const response = axios.get(`http://localhost:6969/candidate/${id}/false`)
+  } catch (err) {
+    console.error(err)
+  }
 }
 </script>
 <style></style>

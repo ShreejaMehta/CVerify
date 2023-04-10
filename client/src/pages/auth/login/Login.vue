@@ -76,7 +76,6 @@ const validate = async (username: string, password: string) => {
     .catch((error) => {
       console.error(error)
     })
-  
 }
 // const handleLogin = async (username: string, password: string) => {
 //   if (!formReady.value) return
