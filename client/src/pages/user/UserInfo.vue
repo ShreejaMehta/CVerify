@@ -62,6 +62,18 @@
         </va-card>
       </div>
     </div>
+    <br />
+    <div class="flex items-center">
+      <va-card>
+        <va-card-title>Actions </va-card-title>
+        <va-card-content>
+          <va-button icon="arrow_forward" icon-color="#fff" class="flex" style="margin: 8px">
+            Accept
+          </va-button>
+          <va-button icon="clear" color="danger" class="flex" style="margin: 8px"> Reject </va-button>
+        </va-card-content>
+      </va-card>
+    </div>
   </div>
 </template>
 
@@ -115,5 +127,4 @@ onMounted(async () => {
   }
 })
 </script>
-<style>
-</style>
+<style></style>
