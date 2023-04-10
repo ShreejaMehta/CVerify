@@ -24,7 +24,7 @@
     </div>
 
     <div class="d-flex justify-center mt-3">
-      <va-button class="my-0" @click="handleLogin(email, password)">{{ t('auth.login') }}</va-button>
+      <va-button class="my-0" @click="validate(email, password)">{{ t('auth.login') }}</va-button>
     </div>
   </form>
 </template>
@@ -54,23 +54,34 @@ function onsubmit() {
   router.push({ name: 'dashboard' })
 }
 const endpoint = 'http://localhost:6969/auth/login'
+
+const data = ref([
+  {
+    username: String,
+    password: String,
+    logged_in: String,
+  },
+])
 // const data = { username: String, password: String, logged_in: String }
 const validate = async (username: string, password: string) => {
   const data2 = { username: username, password: password }
-  axios
+  let resp = await axios
     .post(endpoint, data2)
-    .then((response) => {
-      console.log(response)
-      router.push({ name: 'dashboard' })
+    .then((resp) => {
+      console.log(resp)
+      if (resp.data.logged_in) {
+        router.push({ name: 'dashboard' })
+      }
     })
     .catch((error) => {
       console.error(error)
     })
+  
 }
-const handleLogin = async (username: string, password: string) => {
-  if (!formReady.value) return
-  emailErrors.value = email.value ? [] : ['Email is required']
-  passwordErrors.value = password ? [] : ['Password is required']
-  validate(username, password)
-}
+// const handleLogin = async (username: string, password: string) => {
+//   if (!formReady.value) return
+//   emailErrors.value = email.value ? [] : ['Email is required']
+//   passwordErrors.value = password ? [] : ['Password is required']
+//   validate(username, password)
+// }
 </script>

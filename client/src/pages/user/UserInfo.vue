@@ -67,9 +67,7 @@
       <va-card>
         <va-card-title>Actions </va-card-title>
         <va-card-content>
-          <va-button icon="arrow_forward" icon-color="#fff" class="flex" style="margin: 8px">
-            Accept
-          </va-button>
+          <va-button icon="arrow_forward" icon-color="#fff" class="flex" style="margin: 8px"> Accept </va-button>
           <va-button icon="clear" color="danger" class="flex" style="margin: 8px"> Reject </va-button>
         </va-card-content>
       </va-card>
@@ -126,5 +124,10 @@ onMounted(async () => {
     console.error(error)
   }
 })
+
+const handleStatus = () => {
+  const id = router.currentRoute.value.params.id
+  console.log(candidate.value.status)
+}
 </script>
 <style></style>

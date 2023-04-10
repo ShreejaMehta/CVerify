@@ -60,10 +60,11 @@ const agreedToTermsErrors = ref<string[]>([])
 const formReady = computed(() => {
   return !(emailErrors.value.length || passwordErrors.value.length || agreedToTermsErrors.value.length)
 })
-
+// TODO:generate unique API_key for each user
+const api = 1;
 const validate = async (username: string, password: string) => {
-  const endpoint = 'http://localhost:6969/auth/register'
-  const data = { username: username, password: password }
+  const endpoint = 'http://localhost:6969/auth/register?api_key=1234'
+  const data = { api_key: api, username: username, password: password }
   axios
     .post(endpoint, data)
     .then((response) => {
@@ -83,6 +84,6 @@ function onsubmit() {
   passwordErrors.value = password.value ? [] : ['Password is required']
   agreedToTermsErrors.value = agreedToTerms.value ? [] : ['You must agree to the terms of use to continue']
   validate(email.value, password.value)
-  useRouter().push({ name: 'dashboard' })
+  // useRouter().push({ name: 'dashboard' })
 }
 </script>
