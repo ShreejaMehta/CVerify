@@ -28,10 +28,18 @@ async def login(info: UserAuth) -> AuthResponse:
     return AuthResponse(logged_in=logged_in, message="", sessionId=id)
 
 
+register_descrption = """
+    Returns 1 for successfull registration
+    0 for failed registration
+"""
 # Register
 # TODO: Security
-@router.post("/auth/register", include_in_schema=True)
+@router.post("/auth/register", include_in_schema=True, description=register_descrption)
 async def register(info: UserAuth, api_key: str) -> Union[ServerResponse, ErrorResponse]:
+    """
+    Returns 1 for successfull registration
+    0 for failed registration
+    """
     return (await create_user(info, api_key))
 
 

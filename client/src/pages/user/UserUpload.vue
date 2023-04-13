@@ -40,10 +40,14 @@
 </template>
 
 <script setup lang="ts">
-import axios from 'axios'
+import axios, { AxiosError } from 'axios'
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { useToast } from 'vuestic-ui'
 const router = useRouter()
+
+const { init: toast } = useToast()
+
 type Candidate = {
   fileName: string
   candidateId: number
@@ -60,8 +64,7 @@ const handleOnClick = (candidate: Candidate) => {
 
 const handleUpload = async () => {
   for (let file of fileList.value) {
-    // TODO: Add error handling for axios
-    let resp = await axios
+    axios
       .post(
         'http://localhost:6969/upload',
         {
@@ -74,14 +77,31 @@ const handleUpload = async () => {
         },
       )
       .then((resp) => {
+        if (resp.status !== 200 || resp.data['candidate_id'] === undefined) {
+          toast({ message: `Failed to upload resume ${file.name}`, color: 'danger' })
+          return
+        }
         candidateList.value.push({
           fileName: file.name,
           candidateId: resp.data['candidate_id'],
         })
-        console.log(candidateList.value)
+		toast({ message: `Upload success: ${file.name}`, color: 'success' })
       })
-      .catch((err) => {
-        console.log(err)
+      .catch((err: AxiosError | Error) => {
+		if(axios.isAxiosError(err)) {
+			if(err.status === 400) {
+				toast({ message: `Unable to upload ${file.name}. ${err.message}`, color: 'danger' })
+			}
+			else if (err.status == 422) {
+				toast({ message: `Unable to upload ${file.name}. INVALID FILE TYPE`, color: 'danger' })
+			}
+			else {
+				toast({ message: `Unable to upload ${file.name}. is the server up?`, color: 'danger' })
+			}
+		}
+		else {
+	 		toast({ message: `Unable to upload ${file.name}. Unkown Error`, color: 'danger' })
+		}
       })
   }
 }

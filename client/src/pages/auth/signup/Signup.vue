@@ -47,7 +47,11 @@
 import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
-import axios from 'axios'
+import { useToast } from 'vuestic-ui'
+import axios, { AxiosError } from 'axios'
+
+const { init: toast } = useToast()
+
 const { t } = useI18n()
 const router = useRouter()
 const email = ref('')
@@ -57,22 +61,53 @@ const emailErrors = ref<string[]>([])
 const passwordErrors = ref<string[]>([])
 const agreedToTermsErrors = ref<string[]>([])
 
+const REGISTER_SUCCESS = 1
+const REGISTER_FAILED = 0
+
 const formReady = computed(() => {
   return !(emailErrors.value.length || passwordErrors.value.length || agreedToTermsErrors.value.length)
 })
-// TODO:generate unique API_key for each user
-const api = 1
+// TODO: generate unique API_key for each user
 const validate = async (username: string, password: string) => {
-  const endpoint = 'http://localhost:6969/auth/register?api_key=1234'
-  const data = { api_key: api, username: username, password: password }
+  const apiKey = '1234'
+  const endpoint = `http://localhost:6969/auth/register?api_key=${apiKey}`
+  const data = { username: username, password: password }
   axios
     .post(endpoint, data)
     .then((response) => {
-      console.log(response)
-      router.push({ name: 'dashboard' })
+      if (response.status === 200) {
+        if (response.data['code'] === REGISTER_SUCCESS) {
+          toast({
+            message: 'Successfully registered!',
+            color: 'success',
+          })
+          router.push({ name: 'dashboard' })
+        } else if (response.data['code'] === REGISTER_FAILED){
+          toast({
+			message: `Failed to register: ${response.data['message']}`,
+            color: 'danger',
+          })
+        }
+		else {
+ 		 toast({
+			message: 'Unkown Error',
+			color: 'danger',
+		  })
+		}
+      }
     })
-    .catch((error) => {
-      console.error(error)
+    .catch((err: AxiosError | Error) => {
+      if (axios.isAxiosError(err)) {
+        if (err.status === 400) {
+          toast({ message: `Failed to register: BAD REQUEST`, color: 'danger' })
+        } else if (err.status == 422) {
+          toast({ message: `Failed to register: INVALID EMAIL/PASSWORD`, color: 'danger' })
+        } else {
+          toast({ message: `Failed to register. is the server up?`, color: 'danger' })
+        }
+      } else {
+        toast({ message: `Unkown Error`, color: 'danger' })
+      }
     })
 }
 

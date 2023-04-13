@@ -16,6 +16,10 @@
 import { ref, onMounted } from 'vue'
 import axios from 'axios'
 import { useRouter } from 'vue-router'
+
+import { useToast } from 'vuestic-ui'
+const {init} = useToast();
+
 const router = useRouter()
 interface Candidate {
   id: number
@@ -59,7 +63,8 @@ onMounted(async () => {
     const response = await axios.get('http://localhost:6969/summary/100')
     candidates.value = response.data
   } catch (error) {
-    console.error(error)
+	init({message: 'Failed to fetch from server!', color: 'danger'})
+    /* console.error(error) */
   }
 })
 </script>
