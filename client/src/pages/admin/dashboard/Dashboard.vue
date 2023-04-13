@@ -4,22 +4,6 @@
       <va-card-title>List of candidates</va-card-title>
       <va-card-content>
         <div class="va-table va-table--striped va-table--hoverable">
-          <!-- <table class="va-table va-table--striped va-table--hoverable">
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="c in candidates" :key="c.id">
-                <td>{{ c.name }}</td>
-                <td>{{ c.email }}</td>
-                <td><va-badge :text="c.status" :color="getStatusColor(c.status)" /></td>
-              </tr>
-            </tbody>
-          </table> -->
           <va-data-table :items="candidates" :columns="columns" :clickable="true" @row:click="handleClick">
           </va-data-table>
         </div>
@@ -73,7 +57,6 @@ function getStatusColor(status: string) {
 onMounted(async () => {
   try {
     const response = await axios.get('http://localhost:6969/summary/100')
-    // const data = await response.json()
     candidates.value = response.data
   } catch (error) {
     console.error(error)

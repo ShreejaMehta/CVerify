@@ -68,7 +68,6 @@ const validate = async (username: string, password: string) => {
   axios
     .post(endpoint, data)
     .then((response) => {
-      // data2= response
       console.log(response)
       router.push({ name: 'dashboard' })
     })
@@ -84,6 +83,5 @@ function onsubmit() {
   passwordErrors.value = password.value ? [] : ['Password is required']
   agreedToTermsErrors.value = agreedToTerms.value ? [] : ['You must agree to the terms of use to continue']
   validate(email.value, password.value)
-  // useRouter().push({ name: 'dashboard' })
 }
 </script>

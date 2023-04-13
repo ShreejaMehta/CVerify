@@ -62,7 +62,6 @@ const data = ref([
     logged_in: String,
   },
 ])
-// const data = { username: String, password: String, logged_in: String }
 const validate = async (username: string, password: string) => {
   const data2 = { username: username, password: password }
   let resp = await axios
@@ -77,10 +76,4 @@ const validate = async (username: string, password: string) => {
       console.error(error)
     })
 }
-// const handleLogin = async (username: string, password: string) => {
-//   if (!formReady.value) return
-//   emailErrors.value = email.value ? [] : ['Email is required']
-//   passwordErrors.value = password ? [] : ['Password is required']
-//   validate(username, password)
-// }
 </script>
