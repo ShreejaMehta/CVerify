@@ -32,7 +32,7 @@ const routes: Array<RouteRecordRaw> = [
   {
     name: 'root',
     path: '/',
-    /* beforeEnter: checkLogin, */
+    beforeEnter: checkLogin,
     component: AppLayout,
     children: [
       {
@@ -118,18 +118,6 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   //  mode: process.env.VUE_APP_ROUTER_MODE_HISTORY === 'true' ? 'history' : 'hash',
   routes,
-})
-
-router.beforeEach((to, from, next) => {
-  const store = useGlobalStore()
-
-  if (!store.isLoggedIn && to.name !== 'login') {
-    next({
-      name: 'login',
-    })
-  } else {
-    next()
-  }
 })
 
 export default router
