@@ -5,9 +5,9 @@
       <div class="va-page-not-found__title text-center mb-4">{{ t('404.title') }}</div>
       <div class="va-page-not-found__text px-4 text-center">
         <span>
-          {{ t('404.text') }}
+          If you feel like something is missing, please open a issue at
         </span>
-        <a href="mailto:hello@epicmax.co" :style="{ color: colors.primary }" class="va-link">hello@epicmax.co</a>
+        <a href="https://github.com/rseragon/CVerify/issues" :style="{ color: colors.primary }" class="va-link">Github Issues</a>
       </div>
       <slot />
       <!-- <va-button v-if="!withoutButton" :to="{ name: 'dashboard' }">{{t('404.back_button')}}</va-button> -->

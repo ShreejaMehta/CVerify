@@ -6,14 +6,28 @@ import Page404Layout from '../layouts/Page404Layout.vue'
 
 import RouteViewComponent from '../layouts/RouterBypass.vue'
 
+import {isLoggedIn} from "../utils/authUtils";
+
+function checkLogin(to: any, from: any, next: any) {
+  if (!isLoggedIn()) {
+	next({
+	  name: 'login',
+	})
+  } else {
+	next()
+  }
+}
+
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/:catchAll(.*)',
-    redirect: { name: 'dashboard' },
+	redirect: { name: 'not-found-simple' },
+    /* redirect: { name: 'login' }, */
   },
   {
     name: 'admin',
     path: '/admin',
+	beforeEnter: checkLogin,
     component: AppLayout,
     children: [
       {
@@ -87,24 +101,9 @@ const routes: Array<RouteRecordRaw> = [
     component: Page404Layout,
     children: [
       {
-        name: 'not-found-advanced',
-        path: 'not-found-advanced',
-        component: () => import('../pages/404-pages/VaPageNotFoundSearch.vue'),
-      },
-      {
         name: 'not-found-simple',
         path: 'not-found-simple',
         component: () => import('../pages/404-pages/VaPageNotFoundSimple.vue'),
-      },
-      {
-        name: 'not-found-custom',
-        path: 'not-found-custom',
-        component: () => import('../pages/404-pages/VaPageNotFoundCustom.vue'),
-      },
-      {
-        name: 'not-found-large-text',
-        path: '/pages/not-found-large-text',
-        component: () => import('../pages/404-pages/VaPageNotFoundLargeText.vue'),
       },
     ],
   },
