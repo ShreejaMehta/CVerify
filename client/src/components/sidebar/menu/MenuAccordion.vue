@@ -30,37 +30,35 @@
 </template>
 
 <script setup lang="ts">
-  import { onMounted, ref } from 'vue'
-  import { INavigationRoute } from '../NavigationRoutes'
-  import { useRoute } from 'vue-router'
-  import { useI18n } from 'vue-i18n'
-  const { t } = useI18n()
-  const props = withDefaults(
-    defineProps<{
-      items?: INavigationRoute[]
-    }>(),
-    {
-      items: () => [],
-    },
-  )
-  const accordionValue = ref<boolean[]>([])
-  onMounted(() => {
-    accordionValue.value = props.items.map((item) => isItemExpanded(item))
-  })
-  // function isGroup(item: INavigationRoute) {
-  //   return !!item.children
-  // }
-  function isRouteActive(item: INavigationRoute) {
-    return item.name === useRoute().name
+import { onMounted, ref } from 'vue'
+import { INavigationRoute } from '../NavigationRoutes'
+import { useRoute } from 'vue-router'
+import { useI18n } from 'vue-i18n'
+const { t } = useI18n()
+const props = withDefaults(
+  defineProps<{
+    items?: INavigationRoute[]
+  }>(),
+  {
+    items: () => [],
+  },
+)
+const accordionValue = ref<boolean[]>([])
+onMounted(() => {
+  accordionValue.value = props.items.map((item) => isItemExpanded(item))
+})
+// function isGroup(item: INavigationRoute) {
+//   return !!item.children
+// }
+function isRouteActive(item: INavigationRoute) {
+  return item.name === useRoute().name
+}
+function isItemExpanded(item: INavigationRoute): boolean {
+  if (!item.children) {
+    return false
   }
-  function isItemExpanded(item: INavigationRoute): boolean {
-    if (!item.children) {
-      return false
-    }
-    const isCurrentItemActive = isRouteActive(item)
-    const isChildActive = !!item.children.find((child) =>
-      child.children ? isItemExpanded(child) : isRouteActive(child),
-    )
-    return isCurrentItemActive || isChildActive
-  }
+  const isCurrentItemActive = isRouteActive(item)
+  const isChildActive = !!item.children.find((child) => (child.children ? isItemExpanded(child) : isRouteActive(child)))
+  return isCurrentItemActive || isChildActive
+}
 </script>

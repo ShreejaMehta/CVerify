@@ -6,28 +6,33 @@ import Page404Layout from '../layouts/Page404Layout.vue'
 
 import RouteViewComponent from '../layouts/RouterBypass.vue'
 
-import {isLoggedIn} from "../utils/authUtils";
+import { useGlobalStore } from '../stores/global-store'
 
 function checkLogin(to: any, from: any, next: any) {
-  if (!isLoggedIn()) {
-	next({
-	  name: 'login',
-	})
+  const { isLoggedIn } = useGlobalStore()
+  if (!isLoggedIn) {
+    next({
+      name: 'login',
+    })
   } else {
-	next()
+    next()
   }
 }
 
+
 const routes: Array<RouteRecordRaw> = [
   {
-    path: '/:catchAll(.*)',
-	redirect: { name: 'not-found-simple' },
-    /* redirect: { name: 'login' }, */
+    path: '/',
+    redirect: { name: 'login' },
   },
   {
-    name: 'admin',
-    path: '/admin',
-	beforeEnter: checkLogin,
+    path: '/:catchAll(.*)',
+    redirect: { name: 'not-found-simple' },
+  },
+  {
+    name: 'root',
+    path: '/',
+    /* beforeEnter: checkLogin, */
     component: AppLayout,
     children: [
       {
@@ -113,6 +118,18 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   //  mode: process.env.VUE_APP_ROUTER_MODE_HISTORY === 'true' ? 'history' : 'hash',
   routes,
+})
+
+router.beforeEach((to, from, next) => {
+  const store = useGlobalStore()
+
+  if (!store.isLoggedIn && to.name !== 'login') {
+    next({
+      name: 'login',
+    })
+  } else {
+    next()
+  }
 })
 
 export default router

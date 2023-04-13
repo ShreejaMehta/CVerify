@@ -27,7 +27,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="candidate in candidateList" :key="candidate.candidateId" v-on:click="handleOnClick(candidate)">
+              <tr v-for="candidate in candidateList" :key="candidate.candidateId" @click="handleOnClick(candidate)">
                 <td>{{ candidate.fileName }}</td>
                 <va-badge text="Analyzed" color="success" class="ma-2" />
               </tr>

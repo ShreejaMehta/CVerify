@@ -34,7 +34,12 @@ import { computed, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import axios from 'axios'
+import { useToast } from 'vuestic-ui'
+import { useGlobalStore } from '../../../stores/global-store'
 const { t } = useI18n()
+
+const { init } = useToast()
+const store = useGlobalStore()
 
 const email = ref('')
 const password = ref('')
@@ -69,10 +74,16 @@ const validate = async (username: string, password: string) => {
     .then((resp) => {
       console.log(resp)
       if (resp.data.logged_in) {
+        store.updateLoggedInStatus(true)
         router.push({ name: 'dashboard' })
+        init({ message: 'Logged In!', color: 'success' })
+      } else {
+        init({ message: 'Invalid Username/Password', color: 'danger' })
+        store.updateLoggedInStatus(false)
       }
     })
     .catch((error) => {
+      init({ message: 'Internal server error 500, try again later!', color: 'danger' })
       console.error(error)
     })
 }

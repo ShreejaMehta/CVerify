@@ -16,19 +16,19 @@
 </template>
 
 <script setup lang="ts">
-  import { ref } from 'vue'
-  import { useRouter } from 'vue-router'
-  import { useI18n } from 'vue-i18n'
-  const { t } = useI18n()
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
+const { t } = useI18n()
 
-  const email = ref('')
-  const emailErrors = ref<string[]>([])
+const email = ref('')
+const emailErrors = ref<string[]>([])
 
-  function onsubmit() {
-    if (!email.value) {
-      emailErrors.value = ['Email is required']
-    } else {
-      useRouter().push('/')
-    }
+function onsubmit() {
+  if (!email.value) {
+    emailErrors.value = ['Email is required']
+  } else {
+    useRouter().push('/')
   }
+}
 </script>

@@ -30,42 +30,42 @@
 </template>
 
 <script>
-  import VuesticLogo from '../components/VuesticLogo.vue'
-  import { useI18n } from 'vue-i18n'
+import VuesticLogo from '../components/VuesticLogo.vue'
+import { useI18n } from 'vue-i18n'
 
-  export default {
-    name: 'AuthLayout',
-    components: { VuesticLogo },
-    setup() {
-      const { t } = useI18n()
-      return { t }
-    },
-    data() {
-      return {
-        selectedTabIndex: 0,
-      }
-    },
-    computed: {
-      tabIndex: {
-        set(tabName) {
-          this.$router.push({ name: tabName })
-        },
-        get() {
-          return this.$route.name
-        },
+export default {
+  name: 'AuthLayout',
+  components: { VuesticLogo },
+  setup() {
+    const { t } = useI18n()
+    return { t }
+  },
+  data() {
+    return {
+      selectedTabIndex: 0,
+    }
+  },
+  computed: {
+    tabIndex: {
+      set(tabName) {
+        this.$router.push({ name: tabName })
+      },
+      get() {
+        return this.$route.name
       },
     },
-  }
+  },
+}
 </script>
 
 <style lang="scss">
-  .auth-layout {
-    min-height: 100vh;
-    background-image: linear-gradient(to right, var(--va-background-primary), var(--va-white));
+.auth-layout {
+  min-height: 100vh;
+  background-image: linear-gradient(to right, var(--va-background-primary), var(--va-white));
 
-    &__card {
-      width: 100%;
-      max-width: 600px;
-    }
+  &__card {
+    width: 100%;
+    max-width: 600px;
   }
+}
 </style>

@@ -9,15 +9,15 @@
 </template>
 
 <script setup lang="ts">
-  defineProps<{
-    color: string
-  }>()
+defineProps<{
+  color: string
+}>()
 </script>
 
 <style scoped>
-  svg {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-  }
+svg {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
 </style>

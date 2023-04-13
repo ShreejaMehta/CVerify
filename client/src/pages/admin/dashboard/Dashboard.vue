@@ -41,7 +41,7 @@ const handleClick = (event: any) => {
   console.log(event.itemIndex)
   const id = event.itemIndex + 1
   // const routes = [{ path: `/user/user-info/ :${event.itemIndex + 1}`, redirect: { name: 'user-info' }, props: true }]
-  router.push({ path: `/user-info/${id}`})
+  router.push({ path: `/user-info/${id}` })
 }
 function getStatusColor(status: string) {
   if (status === 'Accepted') {

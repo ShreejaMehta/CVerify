@@ -1,5 +1,5 @@
-import {useGlobalStore} from "../stores/global-store";
+import { useGlobalStore } from '../stores/global-store'
 
 export function isLoggedIn() {
-	  return useGlobalStore().isLoggedIn;
+  return useGlobalStore().isLoggedIn
 }
