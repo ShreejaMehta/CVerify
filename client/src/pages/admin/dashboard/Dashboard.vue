@@ -5,6 +5,18 @@
       <va-card-content>
         <div class="va-table va-table--striped va-table--hoverable">
           <va-data-table :items="candidates" :columns="columns" :clickable="true" @row:click="handleClick">
+            <template #header(status)="{ label }">
+              <va-chip size="small">
+                {{ label }}
+              </va-chip>
+            </template>
+            <template #cell(status)="{ value }">
+              <v-if>
+                <va-chip size="small" :color="getStatusColor(value)">
+                  {{ value }}
+                </va-chip>
+              </v-if>
+            </template>
           </va-data-table>
         </div>
       </va-card-content>
@@ -18,7 +30,7 @@ import axios from 'axios'
 import { useRouter } from 'vue-router'
 
 import { useToast } from 'vuestic-ui'
-const {init} = useToast();
+const { init } = useToast()
 
 const router = useRouter()
 interface Candidate {
@@ -63,7 +75,7 @@ onMounted(async () => {
     const response = await axios.get('http://localhost:6969/summary/100')
     candidates.value = response.data
   } catch (error) {
-	init({message: 'Failed to fetch from server!', color: 'danger'})
+    init({ message: 'Failed to fetch from server!', color: 'danger' })
     /* console.error(error) */
   }
 })
