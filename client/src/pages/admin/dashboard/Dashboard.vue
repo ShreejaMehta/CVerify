@@ -58,9 +58,12 @@ function getStatusColor(status: string) {
   return 'danger'
 }
 
+const serverUrl = import.meta.env.VITE_CVERIFY_SERVER_URL === '' ? 'http://localhost:6969' : import.meta.env.VITE_CVERIFY_SERVER_URL;
+const endPointUrl = serverUrl + '/summary/100'; // gets the list of first 100 candidates
+
 onMounted(async () => {
   try {
-    const response = await axios.get('http://localhost:6969/summary/100')
+    const response = await axios.get(endPointUrl)
     candidates.value = response.data
   } catch (error) {
     init({ message: 'Failed to fetch from server!', color: 'danger' })
