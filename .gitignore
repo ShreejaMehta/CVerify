@@ -17,6 +17,7 @@ dist-ssr
 *.local
 
 dev-dist
+.env
 
 # Editor directories and files
 .vscode/*
@@ -32,3 +33,4 @@ dev-dist
 # Local Netlify folder
 .netlify
 netlify.toml
+
