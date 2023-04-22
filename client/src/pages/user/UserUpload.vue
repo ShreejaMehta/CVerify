@@ -85,23 +85,20 @@ const handleUpload = async () => {
           fileName: file.name,
           candidateId: resp.data['candidate_id'],
         })
-		toast({ message: `Upload success: ${file.name}`, color: 'success' })
+        toast({ message: `Upload success: ${file.name}`, color: 'success' })
       })
       .catch((err: AxiosError | Error) => {
-		if(axios.isAxiosError(err)) {
-			if(err.status === 400) {
-				toast({ message: `Unable to upload ${file.name}. ${err.message}`, color: 'danger' })
-			}
-			else if (err.status == 422) {
-				toast({ message: `Unable to upload ${file.name}. INVALID FILE TYPE`, color: 'danger' })
-			}
-			else {
-				toast({ message: `Unable to upload ${file.name}. is the server up?`, color: 'danger' })
-			}
-		}
-		else {
-	 		toast({ message: `Unable to upload ${file.name}. Unkown Error`, color: 'danger' })
-		}
+        if (axios.isAxiosError(err)) {
+          if (err.status === 400) {
+            toast({ message: `Unable to upload ${file.name}. ${err.message}`, color: 'danger' })
+          } else if (err.status == 422) {
+            toast({ message: `Unable to upload ${file.name}. INVALID FILE TYPE`, color: 'danger' })
+          } else {
+            toast({ message: `Unable to upload ${file.name}. is the server up?`, color: 'danger' })
+          }
+        } else {
+          toast({ message: `Unable to upload ${file.name}. Unkown Error`, color: 'danger' })
+        }
       })
   }
 }

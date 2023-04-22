@@ -80,10 +80,10 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
 import { ref, onMounted } from 'vue'
-import {useToast} from 'vuestic-ui';
+import { useToast } from 'vuestic-ui'
 import axios from 'axios'
 
-const {init: toast} = useToast();
+const { init: toast } = useToast()
 
 const router = useRouter()
 const candidate = ref({
@@ -119,8 +119,8 @@ onMounted(async () => {
     const rep = await axios.get(`https://api.github.com/users/${name}/repos`)
     repos.value = rep.data
   } catch (error) {
-	// TODO: Better error handling
-	toast({message: "Failed to fetch data from server", color: 'danger'})
+    // TODO: Better error handling
+    toast({ message: 'Failed to fetch data from server', color: 'danger' })
   }
 })
 const accept = async () => {
@@ -128,8 +128,8 @@ const accept = async () => {
   try {
     const response = await axios.get(`http://localhost:6969/candidate/${id}/true`)
   } catch (err) {
-	// TODO: Better error handling
-	toast({message: "Failed to update data on server. Try again later", color: 'danger'})
+    // TODO: Better error handling
+    toast({ message: 'Failed to update data on server. Try again later', color: 'danger' })
   }
 }
 const reject = async () => {
@@ -137,8 +137,8 @@ const reject = async () => {
   try {
     const response = await axios.get(`http://localhost:6969/candidate/${id}/false`)
   } catch (err) {
-	// TODO: Better error handling
-	toast({message: "Failed to update data on server. Try again later", color: 'danger'})
+    // TODO: Better error handling
+    toast({ message: 'Failed to update data on server. Try again later', color: 'danger' })
   }
 }
 </script>

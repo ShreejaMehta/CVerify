@@ -82,18 +82,17 @@ const validate = async (username: string, password: string) => {
             color: 'success',
           })
           router.push({ name: 'dashboard' })
-        } else if (response.data['code'] === REGISTER_FAILED){
+        } else if (response.data['code'] === REGISTER_FAILED) {
           toast({
-			message: `Failed to register: ${response.data['message']}`,
+            message: `Failed to register: ${response.data['message']}`,
+            color: 'danger',
+          })
+        } else {
+          toast({
+            message: 'Unkown Error',
             color: 'danger',
           })
         }
-		else {
- 		 toast({
-			message: 'Unkown Error',
-			color: 'danger',
-		  })
-		}
       }
     })
     .catch((err: AxiosError | Error) => {
