@@ -1,0 +1,70 @@
+{
+	"masterPicture": "./assets/logo.svg",
+	"iconsPath": "/",
+	"design": {
+		"ios": {
+			"pictureAspect": "backgroundAndMargin",
+			"backgroundColor": "#ffffff",
+			"margin": "14%",
+			"assets": {
+				"ios6AndPriorIcons": false,
+				"ios7AndLaterIcons": false,
+				"precomposedIcons": false,
+				"declareOnlyDefaultIcon": true
+			},
+			"appName": "CVerify"
+		},
+		"desktopBrowser": {
+			"design": "background",
+			"backgroundColor": "#fffefe",
+			"backgroundRadius": 1,
+			"imageScale": 1
+		},
+		"windows": {
+			"pictureAspect": "whiteSilhouette",
+			"backgroundColor": "#2d89ef",
+			"onConflict": "override",
+			"assets": {
+				"windows80Ie10Tile": false,
+				"windows10Ie11EdgeTiles": {
+					"small": false,
+					"medium": true,
+					"big": false,
+					"rectangle": false
+				}
+			},
+			"appName": "CVerify"
+		},
+		"androidChrome": {
+			"pictureAspect": "backgroundAndMargin",
+			"margin": "21%",
+			"backgroundColor": "#ffffff",
+			"themeColor": "#ffffff",
+			"manifest": {
+				"name": "CVerify",
+				"display": "standalone",
+				"orientation": "notSet",
+				"onConflict": "override",
+				"declared": true
+			},
+			"assets": {
+				"legacyIcon": false,
+				"lowResolutionIcons": false
+			}
+		},
+		"safariPinnedTab": {
+			"pictureAspect": "blackAndWhite",
+			"threshold": 55,
+			"themeColor": "#2b8c7b"
+		}
+	},
+	"settings": {
+		"scalingAlgorithm": "Mitchell",
+		"errorOnImageTooSmall": false,
+		"readmeFile": true,
+		"htmlCodeFile": false,
+		"usePathAsIs": false
+	}
+}
+
+

@@ -19,7 +19,6 @@ function checkLogin(to: any, from: any, next: any) {
   }
 }
 
-
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',

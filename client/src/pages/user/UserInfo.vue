@@ -107,9 +107,11 @@ interface Repos {
   url: string
   forks: number
 }
+const serverUrl = import.meta.env.VITE_CVERIFY_SERVER_URL === '' ? 'http://localhost:6969' : import.meta.env.VITE_CVERIFY_SERVER_URL;
 const repos = ref<Repos[]>([])
 
 onMounted(async () => {
+<<<<<<< HEAD
   const id = router.currentRoute.value.params.id
   try {
     const response = await axios.get(`http://localhost:6969/candidate/${id}`)
@@ -143,6 +145,42 @@ const reject = async () => {
     // TODO: Better error handling
     toast({ message: 'Failed to update data on server. Try again later', color: 'danger' })
   }
+=======
+	const id = router.currentRoute.value.params.id
+	const endPointUrl = serverUrl + `/candidate/${id}`;
+	try {
+		const response = await axios.get(endPointUrl)
+		candidate.value = response.data
+		const name = candidate.value.github
+		const res = await axios.get(`https://api.github.com/users/${name}`)
+		gh.value = res.data
+		const rep = await axios.get(`https://api.github.com/users/${name}/repos`)
+		repos.value = rep.data
+	} catch (error) {
+		// TODO: Better error handling
+		toast({ message: 'Failed to fetch data from server', color: 'danger' })
+	}
+})
+const accept = async () => {
+	const id = router.currentRoute.value.params.id
+	const endPointUrl = serverUrl + `/candidate/${id}/true`;
+	try {
+		const response = await axios.get(endPointUrl)
+	} catch (err) {
+		// TODO: Better error handling
+		toast({ message: 'Failed to update data on server. Try again later', color: 'danger' })
+	}
+}
+const reject = async () => {
+	const id = router.currentRoute.value.params.id
+	const endPointUrl = serverUrl + `/candidate/${id}/false`;
+	try {
+		const response = await axios.get(endPointUrl)
+	} catch (err) {
+		// TODO: Better error handling
+		toast({ message: 'Failed to update data on server. Try again later', color: 'danger' })
+	}
+>>>>>>> b8bdf815e4d23822e81912186c1259e37370a8a6
 }
 </script>
 <style></style>
