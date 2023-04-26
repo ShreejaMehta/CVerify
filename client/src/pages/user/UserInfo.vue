@@ -17,15 +17,16 @@
                 </div>
                 <div class="flex">
                   <va-card-title>Basic Details</va-card-title>
-                  <va-card-content>Name: {{ candidate.name }} </va-card-content>
+                  <va-card-content>Name: {{ candidate.name }}</va-card-content>
                   <va-card-content>Email: {{ candidate.email }}</va-card-content>
                   <va-card-content>Github: {{ candidate.github }}</va-card-content>
+                  <va-card-content>LinkedIn:{{ candidate.linkedin }}</va-card-content>
                 </div>
               </div>
             </va-card-content>
           </va-card>
         </div>
-        <div class="flex md9 xs12">
+        <div class="flex md9 xs12" v-if= "found">
           <!-- Fetch data from Github API-->
           <!-- <va-data-table :items="repos" :columns="columns" /> -->
           <img
@@ -44,6 +45,16 @@
             :src="`https://github-profile-summary-cards.vercel.app/api/cards/profile-details?username=${candidate.github}&theme=github`"
             style="width: 90%"
           />
+        </div>
+        <div class="flex md9 xs12 items-center" v-else>
+          <!-- Fetch data from Github API-->
+          <!-- <va-data-table :items="repos" :columns="columns" /> -->
+          <va-card class="flex text-center">
+            <va-card-content class="">
+              <i class="fas fa-exclamation-triangle" style="font-size: 48px; color: gray"></i>
+              <p>Github Username not found</p>
+            </va-card-content>
+          </va-card>
         </div>
       </div>
 
@@ -67,8 +78,8 @@
       <va-card>
         <va-card-title>Actions </va-card-title>
         <va-card-content>
-          <va-button icon="arrow_forward" icon-color="#fff" class="flex" style="margin: 8px" @click="accept()"
-            >Accept
+          <va-button icon="arrow_forward" icon-color="#fff" class="flex" style="margin: 8px" @click="accept()">
+            Accept
           </va-button>
           <va-button icon="clear" color="danger" class="flex" style="margin: 8px" @click="reject()"> Reject </va-button>
         </va-card-content>
@@ -107,43 +118,47 @@ interface Repos {
   url: string
   forks: number
 }
-const serverUrl = import.meta.env.VITE_CVERIFY_SERVER_URL === '' ? 'http://localhost:6969' : import.meta.env.VITE_CVERIFY_SERVER_URL;
+const serverUrl =
+  import.meta.env.VITE_CVERIFY_SERVER_URL === '' ? 'http://localhost:6969' : import.meta.env.VITE_CVERIFY_SERVER_URL
 const repos = ref<Repos[]>([])
+const found = ref()
+
 onMounted(async () => {
-	const id = router.currentRoute.value.params.id
-	const endPointUrl = serverUrl + `/candidate/${id}`;
-	try {
-		const response = await axios.get(endPointUrl)
-		candidate.value = response.data
-		const name = candidate.value.github
-		const res = await axios.get(`https://api.github.com/users/${name}`)
-		gh.value = res.data
-		const rep = await axios.get(`https://api.github.com/users/${name}/repos`)
-		repos.value = rep.data
-	} catch (error) {
-		// TODO: Better error handling
-		toast({ message: 'Failed to fetch data from server', color: 'danger' })
-	}
+  const id = router.currentRoute.value.params.id
+  const endPointUrl = serverUrl + `/candidate/${id}`
+  try {
+    found.value = true
+    const response = await axios.get(endPointUrl)
+    candidate.value = response.data
+    const name = candidate.value.github
+    const res = await axios.get(`https://api.github.com/users/${name}`)
+    gh.value = res.data
+    const rep = await axios.get(`https://api.github.com/users/${name}/repos`)
+    repos.value = rep.data
+  } catch (error) {
+    found.value = false
+    toast({ message: 'Failed to fetch data from server', color: 'danger' })
+  }
 })
 const accept = async () => {
-	const id = router.currentRoute.value.params.id
-	const endPointUrl = serverUrl + `/candidate/${id}/true`;
-	try {
-		const response = await axios.get(endPointUrl)
-	} catch (err) {
-		// TODO: Better error handling
-		toast({ message: 'Failed to update data on server. Try again later', color: 'danger' })
-	}
+  const id = router.currentRoute.value.params.id
+  const endPointUrl = serverUrl + `/candidate/${id}/true`
+  try {
+    const response = await axios.get(endPointUrl)
+    router.push('/dashboard')
+  } catch (err) {
+    toast({ message: 'Failed to update data on server. Try again later', color: 'danger' })
+  }
 }
 const reject = async () => {
-	const id = router.currentRoute.value.params.id
-	const endPointUrl = serverUrl + `/candidate/${id}/false`;
-	try {
-		const response = await axios.get(endPointUrl)
-	} catch (err) {
-		// TODO: Better error handling
-		toast({ message: 'Failed to update data on server. Try again later', color: 'danger' })
-	}
+  const id = router.currentRoute.value.params.id
+  const endPointUrl = serverUrl + `/candidate/${id}/false`
+  try {
+    const response = await axios.get(endPointUrl)
+    router.push('/dashboard')
+  } catch (err) {
+    toast({ message: 'Failed to update data on server. Try again later', color: 'danger' })
+  }
 }
 </script>
 <style></style>

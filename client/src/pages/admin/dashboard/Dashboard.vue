@@ -5,6 +5,18 @@
       <va-card-content>
         <div class="va-table va-table--striped va-table--hoverable">
           <va-data-table :items="candidates" :columns="columns" :clickable="true" @row:click="handleClick">
+            <template #header(status)="{ label }">
+              <va-chip size="small">
+                {{ label }}
+              </va-chip>
+            </template>
+            <template #cell(status)="{ value }">
+              <v-if>
+                <va-chip size="small" :color="getStatusColor(value)">
+                  {{ value }}
+                </va-chip>
+              </v-if>
+            </template>
           </va-data-table>
         </div>
       </va-card-content>
