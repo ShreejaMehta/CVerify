@@ -62,14 +62,15 @@ const handleOnClick = (candidate: Candidate) => {
   router.push({ path: `/user-info/${candidate.candidateId}` })
 }
 
-const serverUrl = import.meta.env.VITE_CVERIFY_SERVER_URL === '' ? 'http://localhost:6969' : import.meta.env.VITE_CVERIFY_SERVER_URL;
-const endPointUrl = serverUrl + '/upload';
+const serverUrl =
+  import.meta.env.VITE_CVERIFY_SERVER_URL === '' ? 'http://localhost:6969' : import.meta.env.VITE_CVERIFY_SERVER_URL
+const endPointUrl = serverUrl + '/upload'
 
 const handleUpload = async () => {
   for (let file of fileList.value) {
     axios
       .post(
-		endPointUrl,
+        endPointUrl,
         {
           file: file,
         },

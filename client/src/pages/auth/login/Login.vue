@@ -58,9 +58,9 @@ function onsubmit() {
 
   router.push({ name: 'dashboard' })
 }
-const serverUrl = import.meta.env.VITE_CVERIFY_SERVER_URL === '' ? 'http://localhost:6969' : import.meta.env.VITE_CVERIFY_SERVER_URL;
-const endpoint = serverUrl + '/auth/login';
-
+const serverUrl =
+  import.meta.env.VITE_CVERIFY_SERVER_URL === '' ? 'http://localhost:6969' : import.meta.env.VITE_CVERIFY_SERVER_URL
+const endpoint = serverUrl + '/auth/login'
 
 const data = ref([
   {

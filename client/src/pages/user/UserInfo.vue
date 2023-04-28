@@ -26,7 +26,7 @@
             </va-card-content>
           </va-card>
         </div>
-        <div class="flex md9 xs12" v-if= "found">
+        <div v-if="found" class="flex md9 xs12">
           <!-- Fetch data from Github API-->
           <!-- <va-data-table :items="repos" :columns="columns" /> -->
           <img
@@ -46,7 +46,7 @@
             style="width: 90%"
           />
         </div>
-        <div class="flex md9 xs12 items-center" v-else>
+        <div v-else class="flex md9 xs12 items-center">
           <!-- Fetch data from Github API-->
           <!-- <va-data-table :items="repos" :columns="columns" /> -->
           <va-card class="flex text-center">
